@@ -1,0 +1,2556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VSK Studio — Premium Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23ff6b3d' width='100' height='100'/><text x='50' y='75' font-size='80' font-weight='bold' text-anchor='middle' fill='white' font-family='Arial'>V</text></svg>" type="image/svg+xml">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #ff6b3d;
+      --primary-dark: #e55a2b;
+      --primary-light: #ffe4d6;
+      --secondary: #1f6e63;
+      --secondary-light: #2a8f7f;
+      --ink: #10201c;
+      --paper: #f8f3ea;
+      --cream: #efe6d4;
+      --gray: #5e6b66;
+      --light-gray: #8b9690;
+      --border: #ddd4c0;
+      --success: #1a9e5c;
+      --warning: #f59e0b;
+      --error: #d63838;
+      --danger: #dc2626;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .page {
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    /* ─── NAVIGATION ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(248, 243, 234, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 8px rgba(16, 32, 28, 0.08);
+    }
+
+    .nav-logo {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--ink);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .nav-logo:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-logo span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      flex: 1;
+      margin-left: 4rem;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .profile-container {
+      position: relative;
+    }
+
+    .profile-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 12px rgba(255, 107, 61, 0.25);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(16, 32, 28, 0.15);
+      min-width: 220px;
+      margin-top: 0.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      z-index: 1001;
+      overflow: hidden;
+    }
+
+    .dropdown-menu.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      padding: 0.75rem 1.25rem;
+      color: var(--ink);
+      text-decoration: none;
+      display: block;
+      transition: background 0.2s;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .dropdown-item:hover {
+      background: var(--cream);
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0.5rem 0;
+    }
+
+    .dropdown-item.logout {
+      color: var(--error);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 107, 61, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--cream);
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--border);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn.loading {
+      position: relative;
+      color: transparent;
+    }
+
+    .btn.loading::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 50%;
+      left: 50%;
+      margin-left: -8px;
+      margin-top: -8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+      padding: 1rem 0;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      padding: 0.75rem 2rem;
+      color: var(--gray);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .mobile-menu a:hover {
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ─── PAGES ─── */
+    .page {
+      display: none;
+      min-height: calc(100vh - 70px);
+      margin-top: 70px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ─── FORMS ─── */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+      font-size: 0.9rem;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      background: white;
+      color: var(--ink);
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    input:disabled {
+      background: var(--cream);
+      cursor: not-allowed;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 32, 28, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(16, 32, 28, 0.2);
+      z-index: 2001;
+      max-width: 500px;
+      width: 90vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+      padding: 2rem;
+    }
+
+    .modal-overlay.active .modal {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--cream);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: var(--border);
+    }
+
+    .modal h2 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: white;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 12px 32px rgba(16, 32, 28, 0.15);
+      border-left: 4px solid var(--success);
+      z-index: 3000;
+      animation: slideInRight 0.3s;
+      max-width: 400px;
+      font-weight: 500;
+    }
+
+    .toast.error {
+      border-left-color: var(--error);
+    }
+
+    .toast.warning {
+      border-left-color: var(--warning);
+    }
+
+    .toast.info {
+      border-left-color: var(--primary);
+    }
+
+    /* ─── ALERTS ─── */
+    .alert {
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .alert-success {
+      background: rgba(26, 158, 92, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(26, 158, 92, 0.3);
+    }
+
+    .alert-danger {
+      background: rgba(220, 38, 38, 0.1);
+      color: var(--danger);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .alert-warning {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .alert-info {
+      background: rgba(255, 107, 61, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(255, 107, 61, 0.3);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(255, 107, 61, 0.14) 0%, transparent 70%);
+      pointer-events: none;
+      animation: glowDriftA 12s ease-in-out infinite;
+    }
+
+    @keyframes glowDriftA {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-48%) translateY(20px); }
+    }
+
+    .hero h1 {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      max-width: 900px;
+      margin-bottom: 1.5rem;
+      animation: slideInUp 0.7s 0.1s ease-out both;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--primary);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--gray);
+      max-width: 550px;
+      margin: 0 auto 2.5rem;
+      animation: slideInUp 0.7s 0.2s ease-out both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: slideInUp 0.7s 0.3s ease-out both;
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 5rem 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-title em {
+      color: var(--primary);
+      font-style: normal;
+    }
+
+    .section-subtitle {
+      color: var(--gray);
+      max-width: 500px;
+      font-size: 1rem;
+      margin: 0 auto;
+    }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(255, 107, 61, 0.1);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .card h3 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    /* ─── PRICING CARDS ─── */
+    .pricing-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+      position: relative;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--primary);
+      transform: scale(1.05);
+      box-shadow: 0 20px 50px rgba(255, 107, 61, 0.15);
+    }
+
+    .pricing-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-8px);
+    }
+
+    .pricing-card.featured:hover {
+      transform: scale(1.05) translateY(-8px);
+    }
+
+    .badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .price {
+      font-family: 'Manrope', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .price-period {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .features-list {
+      list-style: none;
+      margin: 2rem 0;
+      padding: 0;
+      text-align: left;
+    }
+
+    .features-list li {
+      padding: 0.75rem 0;
+      color: var(--gray);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .features-list li::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    /* ─── ADMIN PANEL ─── */
+    .admin-wrapper {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 0;
+      min-height: calc(100vh - 70px);
+    }
+
+    .admin-sidebar {
+      background: linear-gradient(180deg, var(--ink) 0%, #1a2f2a 100%);
+      color: white;
+      padding: 2rem 0;
+      position: fixed;
+      width: 250px;
+      height: calc(100vh - 70px);
+      overflow-y: auto;
+      left: 0;
+      top: 70px;
+    }
+
+    .admin-logo {
+      padding: 0 1.5rem 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .admin-logo h3 {
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .admin-logo p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.8rem;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+    }
+
+    .sidebar-item {
+      padding: 0.75rem 1.5rem;
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      display: block;
+    }
+
+    .sidebar-item:hover {
+      background: rgba(255, 107, 61, 0.15);
+      color: white;
+    }
+
+    .sidebar-item.active {
+      background: rgba(255, 107, 61, 0.2);
+      color: var(--primary);
+      border-left-color: var(--primary);
+    }
+
+    .admin-content {
+      margin-left: 250px;
+      padding: 2rem;
+      flex: 1;
+    }
+
+    .admin-section {
+      display: none;
+    }
+
+    .admin-section.active {
+      display: block;
+      animation: fadeIn 0.3s;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 8px 20px rgba(255, 107, 61, 0.1);
+    }
+
+    .stat-value {
+      font-family: 'Manrope', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 0.5rem 0;
+    }
+
+    .stat-label {
+      color: var(--gray);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    .table-wrapper {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: var(--cream);
+      padding: 1rem 1.25rem;
+      text-align: left;
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--gray);
+    }
+
+    tr:hover {
+      background: rgba(255, 107, 61, 0.05);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    /* ─── LOGIN PAGE ─── */
+    .auth-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 70px);
+      padding: 2rem;
+    }
+
+    .auth-box {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(16, 32, 28, 0.15);
+      padding: 3rem;
+      max-width: 450px;
+      width: 100%;
+      border: 1px solid var(--border);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .auth-header h1 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-header p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    .auth-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .auth-switch {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    .auth-switch a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ─── TRIAL BANNER ─── */
+    .trial-banner {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .trial-info h3 {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .trial-info p {
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    .trial-progress {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 100px;
+      height: 6px;
+      width: 200px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .trial-progress-bar {
+      background: white;
+      height: 100%;
+      border-radius: 100px;
+      transition: width 0.3s;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink);
+      color: white;
+      padding: 4rem 2rem 2rem;
+      margin-top: 6rem;
+    }
+
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .footer-section a {
+      display: block;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      padding: 0.5rem 0;
+      transition: color 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .footer-section a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 2rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .admin-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+      }
+
+      .admin-content {
+        margin-left: 0;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+
+      .trial-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .trial-progress {
+        width: 100%;
+      }
+
+      .pricing-card.featured {
+        transform: scale(1);
+      }
+
+      .pricing-card.featured:hover {
+        transform: translateY(-8px);
+      }
+
+      section {
+        padding: 3rem 1rem;
+      }
+
+      .auth-box {
+        padding: 2rem;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-logo {
+        font-size: 1.1rem;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+      }
+
+      .modal {
+        padding: 1.5rem;
+      }
+
+      .auth-box {
+        padding: 1.5rem;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      th, td {
+        padding: 0.75rem;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-logo" onclick="navigate('home')">V<span>SK</span></div>
+    <div class="nav-links" id="navLinks">
+      <a onclick="navigate('home')">Home</a>
+      <a onclick="navigate('features')">Features</a>
+      <a onclick="navigate('pricing')">Pricing</a>
+      <a onclick="navigate('about')">About</a>
+      <a onclick="navigate('contact')">Contact</a>
+    </div>
+    <div class="nav-right">
+      <div id="userNav" class="hidden">
+        <div class="profile-container">
+          <button class="profile-btn" id="profileBtn" onclick="toggleProfileMenu()">
+            <span id="userInitial">U</span>
+          </button>
+          <div class="dropdown-menu" id="profileMenu">
+            <a class="dropdown-item" onclick="navigate('dashboard')">Dashboard</a>
+            <a class="dropdown-item" onclick="navigate('profile')">Profile</a>
+            <a class="dropdown-item" onclick="navigate('settings')">Settings</a>
+            <div id="adminMenuDivider" class="dropdown-divider hidden"></div>
+            <a class="dropdown-item hidden" id="adminMenuItem" onclick="navigate('admin')">Admin Panel</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item logout" onclick="logout()">Sign Out</a>
+          </div>
+        </div>
+      </div>
+      <div id="guestNav">
+        <button class="btn btn-primary" onclick="navigate('login')">Sign In</button>
+      </div>
+      <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a onclick="navigate('home'); toggleMobileMenu()">Home</a>
+    <a onclick="navigate('features'); toggleMobileMenu()">Features</a>
+    <a onclick="navigate('pricing'); toggleMobileMenu()">Pricing</a>
+    <a onclick="navigate('about'); toggleMobileMenu()">About</a>
+    <a onclick="navigate('contact'); toggleMobileMenu()">Contact</a>
+  </div>
+
+  <!-- HOME PAGE -->
+  <div id="homePage" class="page active">
+    <div class="hero">
+      <h1>Build <em>stunning</em> websites effortlessly</h1>
+      <p>VSK Studio is the easiest way to create professional websites. No coding required—drag, drop, and launch in minutes.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="navigate('register')">Start Free Trial (15 Days)</button>
+        <button class="btn btn-outline" onclick="navigate('pricing')">View Pricing →</button>
+      </div>
+    </div>
+
+    <section class="container">
+      <div class="section-header">
+        <div class="section-label">Why VSK Studio</div>
+        <h2 class="section-title">Everything you need to <em>succeed</em> online</h2>
+        <p class="section-subtitle">Powerful tools designed for modern creators and businesses.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-icon">🎨</div>
+          <h3>Drag & Drop Editor</h3>
+          <p>Build beautiful websites with our intuitive editor. No coding skills needed.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h3>Mobile Responsive</h3>
+          <p>Your sites automatically adapt to any device, desktop to mobile.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>Lightning Fast</h3>
+          <p>Optimized performance ensures your sites load instantly.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔒</div>
+          <h3>Enterprise Security</h3>
+          <p>SSL encryption and daily backups keep your data safe.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>Analytics</h3>
+          <p>Track visitor behavior and conversions with detailed insights.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🤝</div>
+          <h3>24/7 Support</h3>
+          <p>Expert support team ready to help anytime you need it.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FEATURES PAGE -->
+  <div id="featuresPage" class="page">
+    <section class="container">
+      <div class="section-header">
+        <div class="section-label">Features</div>
+        <h2 class="section-title">Powerful <em>capabilities</em> for your business</h2>
+      </div>
+      <div class="grid grid-2">
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">🎨 Drag & Drop Builder</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Create stunning websites without touching code. Intuitive interface makes design accessible to everyone.</p>
+        </div>
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">📱 Responsive Design</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Automatically optimized for all devices. Your site looks perfect on mobile, tablet, and desktop.</p>
+        </div>
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">🛒 E-Commerce Ready</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Built-in payment processing and product management. Start selling online today.</p>
+        </div>
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">📊 Advanced Analytics</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Track every visitor, conversion, and interaction. Make data-driven decisions.</p>
+        </div>
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">🔒 Security</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Enterprise-grade security with SSL, backups, and DDoS protection.</p>
+        </div>
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">⚙️ Integrations</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Connect with payment gateways, CRMs, email services, and more.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PRICING PAGE -->
+  <div id="pricingPage" class="page">
+    <section class="container">
+      <div class="section-header">
+        <div class="section-label">Pricing</div>
+        <h2 class="section-title">Plans for <em>every</em> budget</h2>
+        <p class="section-subtitle">Choose the perfect plan. Cancel anytime. No hidden fees.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="pricing-card">
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 0.5rem;">Starter</h3>
+          <div class="price">$9<span class="price-period">/month</span></div>
+          <p style="color: var(--gray); margin-bottom: 2rem;">Perfect for getting started</p>
+          <ul class="features-list">
+            <li>Up to 5 websites</li>
+            <li>5GB storage</li>
+            <li>Basic templates</li>
+            <li>Email support</li>
+          </ul>
+          <button class="btn btn-secondary btn-block" onclick="selectPlan('starter')">Choose Plan</button>
+        </div>
+
+        <div class="pricing-card featured">
+          <div class="badge">Most Popular</div>
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 0.5rem; margin-top: 1rem;">Professional</h3>
+          <div class="price">$29<span class="price-period">/month</span></div>
+          <p style="color: var(--gray); margin-bottom: 2rem;">For growing businesses</p>
+          <ul class="features-list">
+            <li>Unlimited websites</li>
+            <li>100GB storage</li>
+            <li>All templates</li>
+            <li>Priority support</li>
+            <li>E-commerce features</li>
+            <li>Advanced analytics</li>
+          </ul>
+          <button class="btn btn-primary btn-block" onclick="selectPlan('professional')">Choose Plan</button>
+        </div>
+
+        <div class="pricing-card">
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 0.5rem;">Enterprise</h3>
+          <div class="price">Custom</div>
+          <p style="color: var(--gray); margin-bottom: 2rem;">For large teams</p>
+          <ul class="features-list">
+            <li>Everything in Pro</li>
+            <li>Unlimited storage</li>
+            <li>Dedicated support</li>
+            <li>Custom integrations</li>
+            <li>Advanced security</li>
+            <li>Team collaboration</li>
+          </ul>
+          <button class="btn btn-secondary btn-block" onclick="navigate('contact')">Contact Sales</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT PAGE -->
+  <div id="aboutPage" class="page">
+    <section class="container">
+      <div class="section-header">
+        <div class="section-label">About Us</div>
+        <h2 class="section-title">Built for <em>creators</em></h2>
+      </div>
+      <div style="max-width: 800px; margin: 3rem auto; line-height: 1.8; color: var(--gray);">
+        <p style="margin-bottom: 1.5rem;">VSK Studio was founded with a simple mission: to make website creation accessible to everyone. We believe that great design and powerful functionality shouldn't require coding knowledge or expensive agencies.</p>
+        <p style="margin-bottom: 1.5rem;">Today, over 50,000 creators and businesses use VSK Studio to bring their ideas to life. From freelancers to small businesses, our platform empowers people to build, launch, and scale their online presence.</p>
+        <p>We're committed to continuous improvement, security, and customer success. Your success is our success.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- CONTACT PAGE -->
+  <div id="contactPage" class="page">
+    <section class="container">
+      <div class="section-header">
+        <div class="section-label">Get in Touch</div>
+        <h2 class="section-title">Let's <em>connect</em></h2>
+        <p class="section-subtitle">Have questions? We'd love to help. Send us a message.</p>
+      </div>
+      <div style="max-width: 500px; margin: 3rem auto;">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="contactName" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="contactEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" id="contactSubject" placeholder="What is this about?">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="contactMessage" placeholder="Tell us more..."></textarea>
+        </div>
+        <div id="contactError" class="alert alert-danger hidden"></div>
+        <button class="btn btn-primary btn-block" onclick="submitContact()">Send Message</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- LOGIN PAGE -->
+  <div id="loginPage" class="page">
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="auth-header">
+          <h1>Welcome Back</h1>
+          <p>Sign in to your account</p>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••">
+        </div>
+        <div id="loginError" class="alert alert-danger hidden"></div>
+        <button class="btn btn-primary btn-block" onclick="submitLogin()">Sign In</button>
+        <div class="auth-divider"></div>
+        <div class="auth-switch">
+          Don't have an account? <a onclick="navigate('register')">Sign up</a>
+        </div>
+        <p style="text-align: center; margin-top: 1rem; font-size: 0.85rem;">
+          <a href="#" onclick="navigate('forgot-password'); return false;" style="color: var(--primary); text-decoration: none;">Forgot your password?</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER PAGE -->
+  <div id="registerPage" class="page">
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="auth-header">
+          <h1>Create Account</h1>
+          <p>Join VSK Studio free for 15 days</p>
+        </div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="registerName" placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="registerEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="registerPassword" placeholder="At least 8 characters">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="registerConfirm" placeholder="Confirm password">
+        </div>
+        <div id="registerError" class="alert alert-danger hidden"></div>
+        <button class="btn btn-primary btn-block" onclick="submitRegister()">Create Account</button>
+        <div class="auth-divider"></div>
+        <div class="auth-switch">
+          Already have an account? <a onclick="navigate('login')">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORGOT PASSWORD PAGE -->
+  <div id="forgotPasswordPage" class="page">
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="auth-header">
+          <h1>Reset Password</h1>
+          <p>Enter your email to receive reset instructions</p>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="resetEmail" placeholder="your@email.com">
+        </div>
+        <div id="resetError" class="alert alert-danger hidden"></div>
+        <button class="btn btn-primary btn-block" onclick="submitPasswordReset()">Send Reset Link</button>
+        <div class="auth-divider"></div>
+        <div class="auth-switch">
+          <a onclick="navigate('login')">← Back to sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN LOGIN PAGE -->
+  <div id="adminLoginPage" class="page">
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="auth-header">
+          <h1>Admin Login</h1>
+          <p>Restricted access</p>
+        </div>
+        <div class="form-group">
+          <label>Admin Email</label>
+          <input type="email" id="adminEmail" placeholder="admin@vskstudio.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="adminPassword" placeholder="••••••••">
+        </div>
+        <div id="adminLoginError" class="alert alert-danger hidden"></div>
+        <button class="btn btn-primary btn-block" onclick="submitAdminLogin()">Sign In</button>
+        <div class="auth-divider"></div>
+        <div class="auth-switch">
+          <a onclick="navigate('login')">← Back to user login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD PAGE -->
+  <div id="dashboardPage" class="page">
+    <section class="container" style="padding: 2rem;">
+      <div id="trialBanner" class="trial-banner hidden">
+        <div class="trial-info">
+          <h3>🎉 Free Trial Active</h3>
+          <p id="trialDaysText">You have 15 days remaining</p>
+          <div class="trial-progress">
+            <div class="trial-progress-bar" id="trialProgressBar" style="width: 100%;"></div>
+          </div>
+        </div>
+        <button class="btn" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid white;" onclick="navigate('pricing')">View Plans</button>
+      </div>
+
+      <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Dashboard</h2>
+
+      <div class="dashboard-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Websites</div>
+          <div class="stat-value" id="userWebsiteCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Storage Used</div>
+          <div class="stat-value" id="userStorageUsed">0 GB</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Monthly Views</div>
+          <div class="stat-value" id="userMonthlyViews">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Subscription</div>
+          <div class="stat-value" id="userSubscription" style="font-size: 1.2rem;">Free Trial</div>
+        </div>
+      </div>
+
+      <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem; margin-top: 2rem;">
+        <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 1.5rem;">Recent Activity</h3>
+        <div id="activityList" style="color: var(--gray); text-align: center; padding: 2rem;">
+          No recent activity
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PROFILE PAGE -->
+  <div id="profilePage" class="page">
+    <section class="container" style="padding: 2rem;">
+      <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Profile Settings</h2>
+
+      <div style="max-width: 600px;">
+        <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="profile-btn" style="width: 80px; height: 80px; font-size: 2rem;">
+              <span id="profileAvatarLarge">U</span>
+            </div>
+            <div>
+              <h3 id="profileDisplayName" style="font-family: Manrope; font-weight: 700; margin-bottom: 0.25rem;">User Name</h3>
+              <p id="profileDisplayEmail" style="color: var(--gray);">email@example.com</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="profileName" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="profileEmail" placeholder="your@email.com" disabled>
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" id="profilePhone" placeholder="(123) 456-7890">
+          </div>
+          <button class="btn btn-primary btn-block" onclick="saveProfile()">Save Changes</button>
+        </div>
+
+        <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem;">
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 1.5rem;">Change Password</h3>
+          <div class="form-group">
+            <label>Current Password</label>
+            <input type="password" id="currentPassword" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" id="newPassword" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="••••••••">
+          </div>
+          <div id="passwordError" class="alert alert-danger hidden"></div>
+          <button class="btn btn-primary btn-block" onclick="changePassword()">Update Password</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SETTINGS PAGE -->
+  <div id="settingsPage" class="page">
+    <section class="container" style="padding: 2rem;">
+      <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Settings</h2>
+
+      <div style="max-width: 600px;">
+        <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 1.5rem;">Email Preferences</h3>
+          <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer; margin-bottom: 1rem;">
+            <input type="checkbox" id="emailNotifications" checked>
+            <span>Receive email notifications</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer; margin-bottom: 1rem;">
+            <input type="checkbox" id="weeklyDigest" checked>
+            <span>Weekly digest emails</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+            <input type="checkbox" id="marketing">
+            <span>Marketing and promotional emails</span>
+          </label>
+        </div>
+
+        <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem;">
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 1.5rem; color: var(--danger);">Danger Zone</h3>
+          <button class="btn btn-block" style="background: var(--danger); color: white; border: none;" onclick="deleteAccount()">Delete Account</button>
+          <p style="color: var(--gray); font-size: 0.85rem; margin-top: 1rem;">This action cannot be undone.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PAYMENT PAGE -->
+  <div id="paymentPage" class="page">
+    <div class="auth-container">
+      <div class="auth-box" style="max-width: 600px;">
+        <div class="auth-header">
+          <h1>Complete Your Purchase</h1>
+          <p>Your free trial has expired</p>
+        </div>
+
+        <div class="alert alert-warning" style="margin-bottom: 2rem;">
+          <strong>Trial Expired:</strong> Your free trial has ended. Please choose a plan to continue using VSK Studio.
+        </div>
+
+        <div style="background: var(--cream); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+            <span>Selected Plan:</span>
+            <strong id="selectedPlanDisplay">Professional - $29/month</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+            <span>Billing Cycle:</span>
+            <strong>Monthly</strong>
+          </div>
+          <div style="border-top: 1px solid var(--border); padding-top: 1rem; display: flex; justify-content: space-between;">
+            <span style="font-weight: 600;">Total:</span>
+            <strong style="color: var(--primary); font-size: 1.2rem;">$29.00</strong>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Cardholder Name</label>
+          <input type="text" id="cardholderName" placeholder="Full name on card">
+        </div>
+        <div class="form-group">
+          <label>Card Number</label>
+          <input type="text" id="cardNumber" placeholder="4242 4242 4242 4242" maxlength="19">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label>Expires</label>
+            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label>CVC</label>
+            <input type="text" id="cardCVC" placeholder="123" maxlength="4">
+          </div>
+        </div>
+
+        <div id="paymentError" class="alert alert-danger hidden"></div>
+        <button class="btn btn-primary btn-block" onclick="processPayment()">Complete Purchase</button>
+        <p style="text-align: center; margin-top: 1rem; font-size: 0.85rem; color: var(--gray);">
+          Your payment information is secure and encrypted.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div id="adminPage" class="page">
+    <div class="admin-wrapper">
+      <div class="admin-sidebar">
+        <div class="admin-logo">
+          <h3>Admin Panel</h3>
+          <p id="adminName">Administrator</p>
+        </div>
+        <ul class="sidebar-menu">
+          <li class="sidebar-item active" onclick="switchAdminTab('dashboard', event)">📊 Dashboard</li>
+          <li class="sidebar-item" onclick="switchAdminTab('users', event)">👥 Users</li>
+          <li class="sidebar-item" onclick="switchAdminTab('subscriptions', event)">💳 Subscriptions</li>
+          <li class="sidebar-item" onclick="switchAdminTab('analytics', event)">📈 Analytics</li>
+          <li class="sidebar-item" onclick="switchAdminTab('settings', event)">⚙️ Settings</li>
+          <li class="sidebar-item logout" style="color: rgba(255,255,255,0.7); margin-top: 2rem;" onclick="logoutAdmin()">🚪 Logout</li>
+        </ul>
+      </div>
+
+      <div class="admin-content">
+        <!-- ADMIN DASHBOARD -->
+        <div id="adminDashboard" class="admin-section active">
+          <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Dashboard</h2>
+
+          <div class="dashboard-grid">
+            <div class="stat-card">
+              <div class="stat-label">Total Users</div>
+              <div class="stat-value" id="adminTotalUsers">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Total Visitors</div>
+              <div class="stat-value" id="adminTotalVisitors">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Active Trials</div>
+              <div class="stat-value" id="adminActiveTrials">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Paid Subscriptions</div>
+              <div class="stat-value" id="adminPaidSubs">0</div>
+            </div>
+          </div>
+
+          <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 2rem;">
+            <div style="padding: 1.5rem; border-bottom: 1.5px solid var(--border);">
+              <h3 style="font-family: Manrope; font-weight: 700;">Recent Users</h3>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Joined</th>
+                  </tr>
+                </thead>
+                <tbody id="adminRecentUsers">
+                  <tr style="color: var(--gray); text-align: center;"><td colspan="4" style="padding: 2rem;">No users yet</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- USERS MANAGEMENT -->
+        <div id="adminUsers" class="admin-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700;">Users</h2>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Plan</th>
+                  <th>Trial Days</th>
+                  <th>Status</th>
+                  <th>Joined</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersList">
+                <tr style="color: var(--gray); text-align: center;"><td colspan="7" style="padding: 2rem;">No users found</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SUBSCRIPTIONS MANAGEMENT -->
+        <div id="adminSubscriptions" class="admin-section">
+          <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Subscriptions</h2>
+
+          <div class="dashboard-grid">
+            <div class="stat-card">
+              <div class="stat-label">Active Subscriptions</div>
+              <div class="stat-value" id="adminActiveSubs">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Monthly Revenue</div>
+              <div class="stat-value">$0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Churn Rate</div>
+              <div class="stat-value">0%</div>
+            </div>
+          </div>
+
+          <div class="table-wrapper" style="margin-top: 2rem;">
+            <table>
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Plan</th>
+                  <th>Status</th>
+                  <th>Started</th>
+                  <th>Renews</th>
+                </tr>
+              </thead>
+              <tbody id="adminSubsList">
+                <tr style="color: var(--gray); text-align: center;"><td colspan="5" style="padding: 2rem;">No subscriptions</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ANALYTICS -->
+        <div id="adminAnalytics" class="admin-section">
+          <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Analytics</h2>
+
+          <div class="dashboard-grid">
+            <div class="stat-card">
+              <div class="stat-label">Total Page Views</div>
+              <div class="stat-value" id="adminPageViews">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Unique Visitors</div>
+              <div class="stat-value" id="adminUniqueVisitors">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Conversion Rate</div>
+              <div class="stat-value">0%</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Avg. Session</div>
+              <div class="stat-value">0s</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="adminSettings" class="admin-section">
+          <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Settings</h2>
+
+          <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem; max-width: 600px;">
+            <div class="form-group">
+              <label>Platform Name</label>
+              <input type="text" value="VSK Studio" id="adminPlatformName">
+            </div>
+            <div class="form-group">
+              <label>Tagline</label>
+              <input type="text" value="Premium Website Builder" id="adminTagline">
+            </div>
+            <div class="form-group">
+              <label>Support Email</label>
+              <input type="email" value="support@vskstudio.com" id="adminSupportEmail">
+            </div>
+            <div class="form-group">
+              <label>Trial Days</label>
+              <input type="number" value="15" id="adminTrialDays">
+            </div>
+            <div class="form-group">
+              <label>Maintenance Mode</label>
+              <select id="maintenanceMode">
+                <option selected>Off</option>
+                <option>On</option>
+              </select>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="saveAdminSettings()">Save Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>VSK Studio</h4>
+        <a href="#" onclick="navigate('home'); return false;">Home</a>
+        <a href="#" onclick="navigate('about'); return false;">About Us</a>
+        <a href="#" onclick="navigate('contact'); return false;">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h4>Product</h4>
+        <a href="#" onclick="navigate('features'); return false;">Features</a>
+        <a href="#" onclick="navigate('pricing'); return false;">Pricing</a>
+        <a href="#">Security</a>
+      </div>
+      <div class="footer-section">
+        <h4>Company</h4>
+        <a href="#">Blog</a>
+        <a href="#">Documentation</a>
+        <a href="#">Status</a>
+      </div>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 VSK Studio. All rights reserved. | Built with ❤️ for creators</p>
+    </div>
+  </footer>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 3000; pointer-events: none;"></div>
+
+  <script>
+    // ─── DATABASE (SIMULATED) ─── 
+    const db = {
+      users: JSON.parse(localStorage.getItem('vsk_users') || '[]'),
+      admins: JSON.parse(localStorage.getItem('vsk_admins') || '[]'),
+      settings: JSON.parse(localStorage.getItem('vsk_settings') || '{"trialDays": 15}'),
+    };
+
+    // Initialize admin account if not exists
+    if (!db.admins.length) {
+      db.admins.push({
+        id: 'admin_1',
+        email: 'admin@vskstudio.com',
+        password: 'Admin@123',
+        name: 'Administrator'
+      });
+      localStorage.setItem('vsk_admins', JSON.stringify(db.admins));
+    }
+
+    let currentUser = null;
+    let currentAdmin = null;
+
+    // ─── INITIALIZATION ─── 
+    function init() {
+      const userEmail = localStorage.getItem('vsk_currentUser');
+      const adminEmail = localStorage.getItem('vsk_currentAdmin');
+
+      if (userEmail) {
+        currentUser = db.users.find(u => u.email === userEmail);
+        if (currentUser) updateNavForLoggedIn();
+      }
+
+      if (adminEmail) {
+        currentAdmin = db.admins.find(a => a.email === adminEmail);
+        if (currentAdmin) {
+          navigate('admin');
+          updateAdminDashboard();
+        }
+      }
+
+      window.addEventListener('scroll', handleNavScroll);
+      document.addEventListener('click', handleDocumentClick);
+    }
+
+    function handleNavScroll() {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.style.boxShadow = '0 4px 12px rgba(16, 32, 28, 0.1)';
+      } else {
+        nav.style.boxShadow = '0 2px 8px rgba(16, 32, 28, 0.08)';
+      }
+    }
+
+    function handleDocumentClick(e) {
+      const menu = document.getElementById('profileMenu');
+      const btn = document.getElementById('profileBtn');
+      if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('active');
+      }
+    }
+
+    // ─── NAVIGATION ─── 
+    function navigate(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const targetPage = document.getElementById(page + 'Page');
+      if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo(0, 0);
+      }
+      closeMobileMenu();
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('hamburger').classList.toggle('active');
+      document.getElementById('mobileMenu').classList.toggle('active');
+    }
+
+    function closeMobileMenu() {
+      document.getElementById('hamburger').classList.remove('active');
+      document.getElementById('mobileMenu').classList.remove('active');
+    }
+
+    function toggleProfileMenu() {
+      document.getElementById('profileMenu').classList.toggle('active');
+    }
+
+    // ─── AUTHENTICATION ─── 
+    function submitLogin() {
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value;
+      const errorEl = document.getElementById('loginError');
+
+      clearError(errorEl);
+
+      if (!email || !password) {
+        showError(errorEl, 'Please fill in all fields');
+        return;
+      }
+
+      const user = db.users.find(u => u.email === email);
+      if (!user || user.password !== password) {
+        showError(errorEl, 'Invalid email or password');
+        return;
+      }
+
+      // Check if trial expired and not paid
+      if (user.trialExpiresAt && new Date() > new Date(user.trialExpiresAt) && user.status !== 'paid') {
+        currentUser = user;
+        localStorage.setItem('vsk_currentUser', email);
+        navigate('payment');
+        showToast('Your free trial has expired. Please select a plan to continue.', 'warning');
+        return;
+      }
+
+      currentUser = user;
+      localStorage.setItem('vsk_currentUser', email);
+      updateNavForLoggedIn();
+      navigate('dashboard');
+      showToast('Welcome back, ' + user.name + '!', 'success');
+    }
+
+    function submitRegister() {
+      const name = document.getElementById('registerName').value.trim();
+      const email = document.getElementById('registerEmail').value.trim().toLowerCase();
+      const password = document.getElementById('registerPassword').value;
+      const confirm = document.getElementById('registerConfirm').value;
+      const errorEl = document.getElementById('registerError');
+
+      clearError(errorEl);
+
+      if (!name || !email || !password || !confirm) {
+        showError(errorEl, 'Please fill in all fields');
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        showError(errorEl, 'Please enter a valid email');
+        return;
+      }
+
+      if (password.length < 8) {
+        showError(errorEl, 'Password must be at least 8 characters');
+        return;
+      }
+
+      if (password !== confirm) {
+        showError(errorEl, 'Passwords do not match');
+        return;
+      }
+
+      if (db.users.find(u => u.email === email)) {
+        showError(errorEl, 'An account with this email already exists');
+        return;
+      }
+
+      // Create new user with 15-day trial
+      const trialDays = parseInt(db.settings.trialDays) || 15;
+      const trialExpiresAt = new Date();
+      trialExpiresAt.setDate(trialExpiresAt.getDate() + trialDays);
+
+      const newUser = {
+        id: 'user_' + Date.now(),
+        name,
+        email,
+        password,
+        phone: '',
+        plan: 'free_trial',
+        status: 'trial',
+        trialStartedAt: new Date().toISOString(),
+        trialExpiresAt: trialExpiresAt.toISOString(),
+        createdAt: new Date().toLocaleDateString(),
+        emailVerified: false,
+        activity: []
+      };
+
+      db.users.push(newUser);
+      localStorage.setItem('vsk_users', JSON.stringify(db.users));
+
+      // Simulate email verification
+      showToast('Account created! Check your email for verification link.', 'success');
+      
+      // Auto-verify for demo
+      newUser.emailVerified = true;
+      localStorage.setItem('vsk_users', JSON.stringify(db.users));
+
+      currentUser = newUser;
+      localStorage.setItem('vsk_currentUser', email);
+      updateNavForLoggedIn();
+      navigate('dashboard');
+      showToast('Welcome to VSK Studio! You have 15 days of free trial.', 'success');
+    }
+
+    function submitPasswordReset() {
+      const email = document.getElementById('resetEmail').value.trim().toLowerCase();
+      const errorEl = document.getElementById('resetError');
+
+      clearError(errorEl);
+
+      if (!email) {
+        showError(errorEl, 'Please enter your email');
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        showError(errorEl, 'Please enter a valid email');
+        return;
+      }
+
+      const user = db.users.find(u => u.email === email);
+      if (!user) {
+        showError(errorEl, 'No account found with this email');
+        return;
+      }
+
+      // Simulate sending email
+      showToast('✓ Password reset email sent to ' + email, 'success');
+      
+      // For demo purposes, set a temporary password
+      const tempPassword = 'TempPass' + Math.random().toString(36).substr(2, 9);
+      console.log('Demo: Temporary password would be: ' + tempPassword);
+      
+      navigate('login');
+    }
+
+    function submitAdminLogin() {
+      const email = document.getElementById('adminEmail').value.trim().toLowerCase();
+      const password = document.getElementById('adminPassword').value;
+      const errorEl = document.getElementById('adminLoginError');
+
+      clearError(errorEl);
+
+      if (!email || !password) {
+        showError(errorEl, 'Please fill in all fields');
+        return;
+      }
+
+      const admin = db.admins.find(a => a.email === email);
+      if (!admin || admin.password !== password) {
+        showError(errorEl, 'Invalid admin credentials');
+        return;
+      }
+
+      currentAdmin = admin;
+      localStorage.setItem('vsk_currentAdmin', email);
+      navigate('admin');
+      updateAdminDashboard();
+      showToast('Admin login successful!', 'success');
+    }
+
+    function updateNavForLoggedIn() {
+      const userNav = document.getElementById('userNav');
+      const guestNav = document.getElementById('guestNav');
+
+      if (currentUser) {
+        userNav.classList.remove('hidden');
+        guestNav.classList.add('hidden');
+        document.getElementById('userInitial').textContent = currentUser.name.charAt(0).toUpperCase();
+        document.getElementById('profileDisplayName').textContent = currentUser.name;
+        document.getElementById('profileDisplayEmail').textContent = currentUser.email;
+        document.getElementById('profileName').value = currentUser.name;
+        document.getElementById('profileEmail').value = currentUser.email;
+        document.getElementById('profilePhone').value = currentUser.phone || '';
+        document.getElementById('profileAvatarLarge').textContent = currentUser.name.charAt(0).toUpperCase();
+
+        // Show trial banner if in trial
+        if (currentUser.status === 'trial') {
+          const banner = document.getElementById('trialBanner');
+          banner.classList.remove('hidden');
+          updateTrialBanner();
+        }
+      } else {
+        userNav.classList.add('hidden');
+        guestNav.classList.remove('hidden');
+      }
+    }
+
+    function updateTrialBanner() {
+      if (!currentUser || currentUser.status !== 'trial') return;
+
+      const expiresAt = new Date(currentUser.trialExpiresAt);
+      const now = new Date();
+      const daysRemaining = Math.ceil((expiresAt - now) / (1000 * 60 * 60 * 24));
+
+      if (daysRemaining <= 0) {
+        navigate('payment');
+        return;
+      }
+
+      document.getElementById('trialDaysText').textContent = `You have ${daysRemaining} day${daysRemaining !== 1 ? 's' : ''} remaining`;
+      const progress = (daysRemaining / 15) * 100;
+      document.getElementById('trialProgressBar').style.width = progress + '%';
+    }
+
+    function selectPlan(plan) {
+      if (!currentUser) {
+        navigate('register');
+        return;
+      }
+
+      currentUser.selectedPlan = plan;
+      localStorage.setItem('vsk_users', JSON.stringify(db.users));
+
+      const planPrices = { 'starter': 9, 'professional': 29, 'enterprise': 'contact' };
+      document.getElementById('selectedPlanDisplay').textContent = 
+        (plan.charAt(0).toUpperCase() + plan.slice(1)) + ' - $' + planPrices[plan] + '/month';
+
+      navigate('payment');
+    }
+
+    function processPayment() {
+      const name = document.getElementById('cardholderName').value;
+      const card = document.getElementById('cardNumber').value;
+      const expiry = document.getElementById('cardExpiry').value;
+      const cvc = document.getElementById('cardCVC').value;
+      const errorEl = document.getElementById('paymentError');
+
+      clearError(errorEl);
+
+      if (!name || !card || !expiry || !cvc) {
+        showError(errorEl, 'Please fill in all card details');
+        return;
+      }
+
+      // Validate card format
+      if (card.replace(/\s/g, '').length !== 16) {
+        showError(errorEl, 'Please enter a valid 16-digit card number');
+        return;
+      }
+
+      // Update user subscription
+      currentUser.status = 'paid';
+      currentUser.plan = currentUser.selectedPlan || 'professional';
+      currentUser.subscriptionStartedAt = new Date().toISOString();
+      const renewDate = new Date();
+      renewDate.setMonth(renewDate.getMonth() + 1);
+      currentUser.subscriptionRenewsAt = renewDate.toISOString();
+
+      const index = db.users.findIndex(u => u.id === currentUser.id);
+      if (index !== -1) {
+        db.users[index] = currentUser;
+        localStorage.setItem('vsk_users', JSON.stringify(db.users));
+      }
+
+      showToast('✓ Payment successful! Your subscription is now active.', 'success');
+      navigate('dashboard');
+    }
+
+    function saveProfile() {
+      if (!currentUser) return;
+
+      currentUser.name = document.getElementById('profileName').value.trim();
+      currentUser.phone = document.getElementById('profilePhone').value.trim();
+
+      const index = db.users.findIndex(u => u.id === currentUser.id);
+      if (index !== -1) {
+        db.users[index] = currentUser;
+        localStorage.setItem('vsk_users', JSON.stringify(db.users));
+      }
+
+      updateNavForLoggedIn();
+      showToast('Profile updated successfully!', 'success');
+    }
+
+    function changePassword() {
+      if (!currentUser) return;
+
+      const current = document.getElementById('currentPassword').value;
+      const newPass = document.getElementById('newPassword').value;
+      const confirm = document.getElementById('confirmPassword').value;
+      const errorEl = document.getElementById('passwordError');
+
+      clearError(errorEl);
+
+      if (!current || !newPass || !confirm) {
+        showError(errorEl, 'Please fill in all fields');
+        return;
+      }
+
+      if (current !== currentUser.password) {
+        showError(errorEl, 'Current password is incorrect');
+        return;
+      }
+
+      if (newPass.length < 8) {
+        showError(errorEl, 'New password must be at least 8 characters');
+        return;
+      }
+
+      if (newPass !== confirm) {
+        showError(errorEl, 'Passwords do not match');
+        return;
+      }
+
+      currentUser.password = newPass;
+      const index = db.users.findIndex(u => u.id === currentUser.id);
+      if (index !== -1) {
+        db.users[index] = currentUser;
+        localStorage.setItem('vsk_users', JSON.stringify(db.users));
+      }
+
+      document.getElementById('currentPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+      showToast('Password changed successfully!', 'success');
+    }
+
+    function deleteAccount() {
+      if (!confirm('Are you sure? This action cannot be undone.')) return;
+
+      const index = db.users.findIndex(u => u.id === currentUser.id);
+      if (index !== -1) {
+        db.users.splice(index, 1);
+        localStorage.setItem('vsk_users', JSON.stringify(db.users));
+      }
+
+      logout();
+      showToast('Account deleted', 'success');
+    }
+
+    function submitContact() {
+      const name = document.getElementById('contactName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim().toLowerCase();
+      const subject = document.getElementById('contactSubject').value.trim();
+      const message = document.getElementById('contactMessage').value.trim();
+      const errorEl = document.getElementById('contactError');
+
+      clearError(errorEl);
+
+      if (!name || !email || !subject || !message) {
+        showError(errorEl, 'Please fill in all fields');
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        showError(errorEl, 'Please enter a valid email');
+        return;
+      }
+
+      showToast('✓ Message sent! We\'ll get back to you soon.', 'success');
+      document.getElementById('contactName').value = '';
+      document.getElementById('contactEmail').value = '';
+      document.getElementById('contactSubject').value = '';
+      document.getElementById('contactMessage').value = '';
+    }
+
+    // ─── ADMIN FUNCTIONS ─── 
+    function updateAdminDashboard() {
+      if (!currentAdmin) return;
+
+      // Update dashboard stats
+      const activeTrials = db.users.filter(u => u.status === 'trial').length;
+      const paidSubs = db.users.filter(u => u.status === 'paid').length;
+
+      document.getElementById('adminName').textContent = currentAdmin.name;
+      document.getElementById('adminTotalUsers').textContent = db.users.length;
+      document.getElementById('adminTotalVisitors').textContent = (Math.random() * 100000).toFixed(0);
+      document.getElementById('adminActiveTrials').textContent = activeTrials;
+      document.getElementById('adminPaidSubs').textContent = paidSubs;
+
+      // Recent users
+      const recentUsers = db.users.slice(-5).reverse();
+      document.getElementById('adminRecentUsers').innerHTML = recentUsers.length 
+        ? recentUsers.map(u => `
+            <tr>
+              <td>${u.name}</td>
+              <td>${u.email}</td>
+              <td><span style="background: ${u.status === 'paid' ? 'rgba(26, 158, 92, 0.1)' : 'rgba(255, 107, 61, 0.1)'}; color: ${u.status === 'paid' ? 'var(--success)' : 'var(--primary)'}; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">${u.status === 'paid' ? 'Paid' : 'Trial'}</span></td>
+              <td>${u.createdAt}</td>
+            </tr>
+          `).join('')
+        : '<tr style="color: var(--gray); text-align: center;"><td colspan="4" style="padding: 2rem;">No users yet</td></tr>';
+
+      // Users table
+      const usersHtml = db.users.map(u => {
+        const daysRemaining = u.status === 'trial' 
+          ? Math.ceil((new Date(u.trialExpiresAt) - new Date()) / (1000 * 60 * 60 * 24))
+          : '-';
+        return `
+          <tr>
+            <td>${u.name}</td>
+            <td>${u.email}</td>
+            <td>${u.plan === 'free_trial' ? 'Trial' : u.plan || 'None'}</td>
+            <td>${daysRemaining}</td>
+            <td><span style="background: ${u.status === 'paid' ? 'rgba(26, 158, 92, 0.1)' : 'rgba(255, 107, 61, 0.1)'}; color: ${u.status === 'paid' ? 'var(--success)' : 'var(--primary)'}; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">${u.status === 'paid' ? 'Active' : 'Trial'}</span></td>
+            <td>${u.createdAt}</td>
+            <td><button class="btn btn-small btn-outline" onclick="adminEditUser('${u.id}')">Edit</button></td>
+          </tr>
+        `;
+      });
+
+      document.getElementById('adminUsersList').innerHTML = usersHtml.length 
+        ? usersHtml.join('')
+        : '<tr style="color: var(--gray); text-align: center;"><td colspan="7" style="padding: 2rem;">No users found</td></tr>';
+
+      // Subscriptions
+      const activeSubs = paidSubs;
+      const monthlyRevenue = db.users.filter(u => u.status === 'paid').reduce((sum, u) => {
+        const prices = { 'starter': 9, 'professional': 29, 'enterprise': 0 };
+        return sum + (prices[u.plan] || 0);
+      }, 0);
+
+      document.getElementById('adminActiveSubs').textContent = activeSubs;
+
+      const subsList = db.users.filter(u => u.status === 'paid').map(u => `
+        <tr>
+          <td>${u.name}</td>
+          <td>${u.plan.charAt(0).toUpperCase() + u.plan.slice(1)}</td>
+          <td><span style="background: rgba(26, 158, 92, 0.1); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">Active</span></td>
+          <td>${u.subscriptionStartedAt ? new Date(u.subscriptionStartedAt).toLocaleDateString() : '-'}</td>
+          <td>${u.subscriptionRenewsAt ? new Date(u.subscriptionRenewsAt).toLocaleDateString() : '-'}</td>
+        </tr>
+      `);
+
+      document.getElementById('adminSubsList').innerHTML = subsList.length 
+        ? subsList.join('')
+        : '<tr style="color: var(--gray); text-align: center;"><td colspan="5" style="padding: 2rem;">No paid subscriptions</td></tr>';
+
+      // Analytics
+      document.getElementById('adminPageViews').textContent = (Math.random() * 50000).toFixed(0);
+      document.getElementById('adminUniqueVisitors').textContent = (Math.random() * 20000).toFixed(0);
+    }
+
+    function switchAdminTab(tab, event) {
+      document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+
+      const sectionId = 'admin' + tab.charAt(0).toUpperCase() + tab.slice(1);
+      document.getElementById(sectionId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function adminEditUser(userId) {
+      const user = db.users.find(u => u.id === userId);
+      if (user) {
+        showToast('Edit user: ' + user.name, 'info');
+      }
+    }
+
+    function saveAdminSettings() {
+      db.settings.trialDays = document.getElementById('adminTrialDays').value;
+      localStorage.setItem('vsk_settings', JSON.stringify(db.settings));
+      showToast('Settings saved successfully!', 'success');
+    }
+
+    function logoutAdmin() {
+      currentAdmin = null;
+      localStorage.removeItem('vsk_currentAdmin');
+      navigate('admin-login');
+      showToast('Admin logged out', 'success');
+    }
+
+    function logout() {
+      currentUser = null;
+      localStorage.removeItem('vsk_currentUser');
+      updateNavForLoggedIn();
+      navigate('home');
+      showToast('You have been signed out', 'success');
+    }
+
+    // ─── UTILITIES ─── 
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function showError(element, message) {
+      element.textContent = message;
+      element.classList.remove('hidden');
+    }
+
+    function clearError(element) {
+      element.textContent = '';
+      element.classList.add('hidden');
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + type;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(400px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
