@@ -1,0 +1,3088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VSK Studio — Premium Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23ff6b3d' width='100' height='100'/><text x='50' y='75' font-size='80' font-weight='bold' text-anchor='middle' fill='white' font-family='Arial'>V</text></svg>" type="image/svg+xml">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #ff6b3d;
+      --primary-dark: #e55a2b;
+      --primary-light: #ffe4d6;
+      --secondary: #1f6e63;
+      --secondary-light: #2a8f7f;
+      --ink: #10201c;
+      --paper: #f8f3ea;
+      --cream: #efe6d4;
+      --gray: #5e6b66;
+      --light-gray: #8b9690;
+      --border: #ddd4c0;
+      --success: #1a9e5c;
+      --warning: #f59e0b;
+      --error: #d63838;
+      --danger: #dc2626;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .page {
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    /* ─── NAVIGATION ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(248, 243, 234, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 2px 8px rgba(16, 32, 28, 0.08);
+    }
+
+    .nav-logo {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--ink);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .nav-logo:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-logo span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      flex: 1;
+      margin-left: 4rem;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .profile-container {
+      position: relative;
+    }
+
+    .profile-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 12px rgba(255, 107, 61, 0.25);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(16, 32, 28, 0.15);
+      min-width: 220px;
+      margin-top: 0.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      z-index: 1001;
+      overflow: hidden;
+    }
+
+    .dropdown-menu.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      padding: 0.75rem 1.25rem;
+      color: var(--ink);
+      text-decoration: none;
+      display: block;
+      transition: background 0.2s;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .dropdown-item:hover {
+      background: var(--cream);
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0.5rem 0;
+    }
+
+    .dropdown-item.logout {
+      color: var(--error);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 107, 61, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--cream);
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--border);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn.loading {
+      position: relative;
+      color: transparent;
+    }
+
+    .btn.loading::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 50%;
+      left: 50%;
+      margin-left: -8px;
+      margin-top: -8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+      padding: 1rem 0;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      padding: 0.75rem 2rem;
+      color: var(--gray);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .mobile-menu a:hover {
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ─── PAGES ─── */
+    .page {
+      display: none;
+      min-height: calc(100vh - 70px);
+      margin-top: 70px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ─── FORMS ─── */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+      font-size: 0.9rem;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      background: white;
+      color: var(--ink);
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    input:disabled {
+      background: var(--cream);
+      cursor: not-allowed;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 32, 28, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(16, 32, 28, 0.2);
+      z-index: 2001;
+      max-width: 500px;
+      width: 90vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+      padding: 2rem;
+    }
+
+    .modal-overlay.active .modal {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--cream);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: var(--border);
+    }
+
+    .modal h2 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: white;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 12px 32px rgba(16, 32, 28, 0.15);
+      border-left: 4px solid var(--success);
+      z-index: 3000;
+      animation: slideInRight 0.3s;
+      max-width: 400px;
+      font-weight: 500;
+    }
+
+    .toast.error {
+      border-left-color: var(--error);
+    }
+
+    .toast.warning {
+      border-left-color: var(--warning);
+    }
+
+    .toast.info {
+      border-left-color: var(--primary);
+    }
+
+    /* ─── ALERTS ─── */
+    .alert {
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .alert-success {
+      background: rgba(26, 158, 92, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(26, 158, 92, 0.3);
+    }
+
+    .alert-danger {
+      background: rgba(220, 38, 38, 0.1);
+      color: var(--danger);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .alert-warning {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .alert-info {
+      background: rgba(255, 107, 61, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(255, 107, 61, 0.3);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(255, 107, 61, 0.14) 0%, transparent 70%);
+      pointer-events: none;
+      animation: glowDriftA 12s ease-in-out infinite;
+    }
+
+    @keyframes glowDriftA {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-48%) translateY(20px); }
+    }
+
+    .hero h1 {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      max-width: 900px;
+      margin-bottom: 1.5rem;
+      animation: slideInUp 0.7s 0.1s ease-out both;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--primary);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--gray);
+      max-width: 550px;
+      margin: 0 auto 2.5rem;
+      animation: slideInUp 0.7s 0.2s ease-out both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: slideInUp 0.7s 0.3s ease-out both;
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 5rem 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-title em {
+      color: var(--primary);
+      font-style: normal;
+    }
+
+    .section-subtitle {
+      color: var(--gray);
+      max-width: 500px;
+      font-size: 1rem;
+      margin: 0 auto;
+    }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(255, 107, 61, 0.1);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .card h3 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    /* ─── PRICING CARDS ─── */
+    .pricing-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+      position: relative;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--primary);
+      transform: scale(1.05);
+      box-shadow: 0 20px 50px rgba(255, 107, 61, 0.15);
+    }
+
+    .pricing-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-8px);
+    }
+
+    .pricing-card.featured:hover {
+      transform: scale(1.05) translateY(-8px);
+    }
+
+    .badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .price {
+      font-family: 'Manrope', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .price-period {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .features-list {
+      list-style: none;
+      margin: 2rem 0;
+      padding: 0;
+      text-align: left;
+    }
+
+    .features-list li {
+      padding: 0.75rem 0;
+      color: var(--gray);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .features-list li::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    /* ─── ADMIN PANEL ─── */
+    .admin-wrapper {
+      min-height: calc(100vh - 70px);
+    }
+
+    .admin-sidebar {
+      background: linear-gradient(180deg, var(--ink) 0%, #1a2f2a 100%);
+      color: white;
+      padding: 2rem 0;
+      position: fixed;
+      width: 250px;
+      height: calc(100vh - 70px);
+      overflow-y: auto;
+      left: 0;
+      top: 70px;
+    }
+
+    .admin-logo {
+      padding: 0 1.5rem 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .admin-logo h3 {
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .admin-logo p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.8rem;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+    }
+
+    .sidebar-item {
+      padding: 0.75rem 1.5rem;
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      display: block;
+    }
+
+    .sidebar-item:hover {
+      background: rgba(255, 107, 61, 0.15);
+      color: white;
+    }
+
+    .sidebar-item.active {
+      background: rgba(255, 107, 61, 0.2);
+      color: var(--primary);
+      border-left-color: var(--primary);
+    }
+
+    .admin-content {
+      margin-left: 250px;
+      padding: 2rem;
+      width: calc(100% - 250px);
+      box-sizing: border-box;
+    }
+
+    .admin-section {
+      display: none;
+    }
+
+    .admin-section.active {
+      display: block;
+      animation: fadeIn 0.3s;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 8px 20px rgba(255, 107, 61, 0.1);
+    }
+
+    .stat-value {
+      font-family: 'Manrope', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 0.5rem 0;
+    }
+
+    .stat-label {
+      color: var(--gray);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    .table-wrapper {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: var(--cream);
+      padding: 1rem 1.25rem;
+      text-align: left;
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--gray);
+    }
+
+    tr:hover {
+      background: rgba(255, 107, 61, 0.05);
+    }
+
+    .admin-toolbar {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .admin-search {
+      flex: 1;
+      min-width: 220px;
+      max-width: 360px;
+      padding: 0.65rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      background: white;
+    }
+
+    .admin-search:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .visitor-filter.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .pw-chip {
+      font-family: 'Manrope', monospace;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.03em;
+    }
+
+    .msg-chip {
+      display: inline-block;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 0.85rem;
+    }
+
+    .msg-empty {
+      color: var(--light-gray);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    /* ─── LOGIN PAGE ─── */
+    .auth-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 70px);
+      padding: 2rem;
+    }
+
+    .auth-box {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(16, 32, 28, 0.15);
+      padding: 3rem;
+      max-width: 450px;
+      width: 100%;
+      border: 1px solid var(--border);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .auth-header h1 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-header p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    .auth-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .auth-divider span {
+      position: absolute;
+      top: -0.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 0 0.75rem;
+      color: var(--light-gray);
+      font-size: 0.8rem;
+    }
+
+    .btn-google {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.65rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      background: white;
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 0.75rem;
+    }
+
+    .btn-google:hover {
+      border-color: var(--gray);
+      box-shadow: 0 4px 12px rgba(16, 32, 28, 0.08);
+    }
+
+    .auth-switch {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    .auth-switch a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ─── TRIAL BANNER ─── */
+    .trial-banner {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .trial-info h3 {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .trial-info p {
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    .trial-progress {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 100px;
+      height: 6px;
+      width: 200px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .trial-progress-bar {
+      background: white;
+      height: 100%;
+      border-radius: 100px;
+      transition: width 0.3s;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink);
+      color: white;
+      padding: 4rem 2rem 2rem;
+      margin-top: 6rem;
+    }
+
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .footer-section a {
+      display: block;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      padding: 0.5rem 0;
+      transition: color 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .footer-section a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 2rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .admin-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+      }
+
+      .admin-content {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+
+      .trial-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .trial-progress {
+        width: 100%;
+      }
+
+      .pricing-card.featured {
+        transform: scale(1);
+      }
+
+      .pricing-card.featured:hover {
+        transform: translateY(-8px);
+      }
+
+      section {
+        padding: 3rem 1rem;
+      }
+
+      .auth-box {
+        padding: 2rem;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-logo {
+        font-size: 1.1rem;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+      }
+
+      .modal {
+        padding: 1.5rem;
+      }
+
+      .auth-box {
+        padding: 1.5rem;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      th, td {
+        padding: 0.75rem;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+
+  <!-- Firebase (free cloud database — makes users/messages/visitors sync globally) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+
+  <!-- Shown only until the Firebase config below is filled in -->
+  <div id="setupBanner" style="display:none; background:#fef3c7; color:#92400e; text-align:center; padding:0.75rem 1rem; font-size:0.9rem; font-weight:600; position:relative; z-index:9999;">
+    ⚠️ Cloud sync isn't set up yet — messages/signups only save on this device. See the Firebase setup steps in the comments near the top of the &lt;script&gt; section.
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-logo" onclick="navigate('home')">V<span>SK</span></div>
+    <div class="nav-links" id="navLinks">
+      <a onclick="navigate('home')">Home</a>
+      <a onclick="navigate('features')">Features</a>
+      <a onclick="navigate('pricing')">Pricing</a>
+      <a onclick="navigate('about')">About</a>
+      <a onclick="navigate('contact')">Contact</a>
+    </div>
+    <div class="nav-right">
+      <div id="userNav" class="hidden">
+        <div class="profile-container">
+          <button class="profile-btn" id="profileBtn" onclick="toggleProfileMenu()">
+            <span id="userInitial">U</span>
+          </button>
+          <div class="dropdown-menu" id="profileMenu">
+            <a class="dropdown-item" onclick="navigate('dashboard')">Dashboard</a>
+            <a class="dropdown-item" onclick="navigate('profile')">Profile</a>
+            <a class="dropdown-item" onclick="navigate('settings')">Settings</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item logout" onclick="logout()">Sign Out</a>
+          </div>
+        </div>
+      </div>
+      <div id="guestNav">
+        <button class="btn btn-primary" onclick="navigate('login')">Sign In</button>
+      </div>
+      <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a onclick="navigate('home'); toggleMobileMenu()">Home</a>
+    <a onclick="navigate('features'); toggleMobileMenu()">Features</a>
+    <a onclick="navigate('pricing'); toggleMobileMenu()">Pricing</a>
+    <a onclick="navigate('about'); toggleMobileMenu()">About</a>
+    <a onclick="navigate('contact'); toggleMobileMenu()">Contact</a>
+  </div>
+
+  <!-- HOME PAGE -->
+  <div id="homePage" class="page active">
+    <div class="hero">
+      <h1>Build <em>stunning</em> websites effortlessly</h1>
+      <p>VSK Studio is the easiest way to create professional websites. No coding required—drag, drop, and launch in minutes.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="navigate('register')">Start Free Trial (15 Days)</button>
+        <button class="btn btn-outline" onclick="navigate('pricing')">View Pricing →</button>
+      </div>
+    </div>
+
+    <section class="container">
+      <div class="section-header">
+        <div class="section-label">Why VSK Studio</div>
+        <h2 class="section-title">Everything you need to <em>succeed</em> online</h2>
+        <p class="section-subtitle">Powerful tools designed for modern creators and businesses.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-icon">🎨</div>
+          <h3>Drag & Drop Editor</h3>
+          <p>Build beautiful websites with our intuitive editor. No coding skills needed.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h3>Mobile Responsive</h3>
+          <p>Your sites automatically adapt to any device, desktop to mobile.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>Lightning Fast</h3>
+          <p>Optimized performance ensures your sites load instantly.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔒</div>
+          <h3>Enterprise Security</h3>
+          <p>SSL encryption and daily backups keep your data safe.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>Analytics</h3>
+          <p>Track visitor behavior and conversions with detailed insights.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🤝</div>
+          <h3>24/7 Support</h3>
+          <p>Expert support team ready to help anytime you need it.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FEATURES PAGE -->
+  <div id="featuresPage" class="page">
+    <section class="container">
+      <div class="section-header">
+        <div class="section-label">Features</div>
+        <h2 class="section-title">Powerful <em>capabilities</em> for your business</h2>
+      </div>
+      <div class="grid grid-2">
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">🎨 Drag & Drop Builder</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Create stunning websites without touching code. Intuitive interface makes design accessible to everyone.</p>
+        </div>
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">📱 Responsive Design</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Automatically optimized for all devices. Your site looks perfect on mobile, tablet, and desktop.</p>
+        </div>
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">🛒 E-Commerce Ready</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Built-in payment processing and product management. Start selling online today.</p>
+        </div>
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">📊 Advanced Analytics</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Track every visitor, conversion, and interaction. Make data-driven decisions.</p>
+        </div>
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">🔒 Security</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Enterprise-grade security with SSL, backups, and DDoS protection.</p>
+        </div>
+        <div style="padding: 2rem;">
+          <h3 style="font-family: Manrope; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">⚙️ Integrations</h3>
+          <p style="color: var(--gray); line-height: 1.8;">Connect with payment gateways, CRMs, email services, and more.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PRICING PAGE -->
+  <div id="pricingPage" class="page">
+    <section class="container">
+      <div class="section-header">
+        <div class="section-label">Pricing</div>
+        <h2 class="section-title">Plans for <em>every</em> budget</h2>
+        <p class="section-subtitle">Choose the perfect plan. Cancel anytime. No hidden fees.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="pricing-card">
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 0.5rem;">Starter</h3>
+          <div class="price">$9<span class="price-period">/month</span></div>
+          <p style="color: var(--gray); margin-bottom: 2rem;">Perfect for getting started</p>
+          <ul class="features-list">
+            <li>Up to 5 websites</li>
+            <li>5GB storage</li>
+            <li>Basic templates</li>
+            <li>Email support</li>
+          </ul>
+          <button class="btn btn-secondary btn-block" onclick="selectPlan('starter')">Choose Plan</button>
+        </div>
+
+        <div class="pricing-card featured">
+          <div class="badge">Most Popular</div>
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 0.5rem; margin-top: 1rem;">Professional</h3>
+          <div class="price">$29<span class="price-period">/month</span></div>
+          <p style="color: var(--gray); margin-bottom: 2rem;">For growing businesses</p>
+          <ul class="features-list">
+            <li>Unlimited websites</li>
+            <li>100GB storage</li>
+            <li>All templates</li>
+            <li>Priority support</li>
+            <li>E-commerce features</li>
+            <li>Advanced analytics</li>
+          </ul>
+          <button class="btn btn-primary btn-block" onclick="selectPlan('professional')">Choose Plan</button>
+        </div>
+
+        <div class="pricing-card">
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 0.5rem;">Enterprise</h3>
+          <div class="price">Custom</div>
+          <p style="color: var(--gray); margin-bottom: 2rem;">For large teams</p>
+          <ul class="features-list">
+            <li>Everything in Pro</li>
+            <li>Unlimited storage</li>
+            <li>Dedicated support</li>
+            <li>Custom integrations</li>
+            <li>Advanced security</li>
+            <li>Team collaboration</li>
+          </ul>
+          <button class="btn btn-secondary btn-block" onclick="navigate('contact')">Contact Sales</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT PAGE -->
+  <div id="aboutPage" class="page">
+    <section class="container">
+      <div class="section-header">
+        <div class="section-label">About Us</div>
+        <h2 class="section-title">Built for <em>creators</em></h2>
+      </div>
+      <div style="max-width: 800px; margin: 3rem auto; line-height: 1.8; color: var(--gray);">
+        <p style="margin-bottom: 1.5rem;">VSK Studio was founded with a simple mission: to make website creation accessible to everyone. We believe that great design and powerful functionality shouldn't require coding knowledge or expensive agencies.</p>
+        <p style="margin-bottom: 1.5rem;">Today, over 50,000 creators and businesses use VSK Studio to bring their ideas to life. From freelancers to small businesses, our platform empowers people to build, launch, and scale their online presence.</p>
+        <p>We're committed to continuous improvement, security, and customer success. Your success is our success.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- CONTACT PAGE -->
+  <div id="contactPage" class="page">
+    <section class="container">
+      <div class="section-header">
+        <div class="section-label">Get in Touch</div>
+        <h2 class="section-title">Let's <em>connect</em></h2>
+        <p class="section-subtitle">Have questions? We'd love to help. Send us a message.</p>
+      </div>
+      <div style="max-width: 500px; margin: 3rem auto;">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="contactName" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="contactEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <div style="display: grid; grid-template-columns: 140px 1fr; gap: 0.5rem;">
+            <select id="contactCountryCode"></select>
+            <input type="tel" id="contactPhone" placeholder="10-digit number" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" id="contactSubject" placeholder="What is this about?">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="contactMessage" placeholder="Tell us more..."></textarea>
+        </div>
+        <div id="contactError" class="alert alert-danger hidden"></div>
+        <button class="btn btn-primary btn-block" onclick="submitContact()">Send Message</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- LOGIN PAGE -->
+  <div id="loginPage" class="page">
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="auth-header">
+          <h1>Welcome Back</h1>
+          <p>Sign in to your account</p>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••">
+        </div>
+        <div id="loginError" class="alert alert-danger hidden"></div>
+        <button class="btn btn-primary btn-block" onclick="submitLogin()">Sign In</button>
+        <div class="auth-divider"><span>or</span></div>
+        <button class="btn-google" onclick="signInWithGoogle()">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.13-.84 2.09-1.8 2.73v2.27h2.92c1.7-1.57 2.68-3.88 2.68-6.64z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.81 5.96-2.18l-2.92-2.27c-.81.54-1.85.86-3.04.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.34C2.44 15.98 5.48 18 9 18z"/><path fill="#FBBC05" d="M3.97 10.7A5.4 5.4 0 0 1 3.68 9c0-.59.1-1.17.29-1.7V4.96H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.04l3.01-2.34z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.59-2.59C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l3.01 2.34C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
+          Continue with Google
+        </button>
+        <div class="auth-switch">
+          Don't have an account? <a onclick="navigate('register')">Sign up</a>
+        </div>
+        <p style="text-align: center; margin-top: 1rem; font-size: 0.85rem;">
+          <a href="#" onclick="navigate('forgot-password'); return false;" style="color: var(--primary); text-decoration: none;">Forgot your password?</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER PAGE -->
+  <div id="registerPage" class="page">
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="auth-header">
+          <h1>Create Account</h1>
+          <p>Join VSK Studio free for 15 days</p>
+        </div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="registerName" placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="registerEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="registerPassword" placeholder="At least 8 characters">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="registerConfirm" placeholder="Confirm password">
+        </div>
+        <div id="registerError" class="alert alert-danger hidden"></div>
+        <button class="btn btn-primary btn-block" onclick="submitRegister()">Create Account</button>
+        <div class="auth-divider"><span>or</span></div>
+        <button class="btn-google" onclick="signInWithGoogle()">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.13-.84 2.09-1.8 2.73v2.27h2.92c1.7-1.57 2.68-3.88 2.68-6.64z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.81 5.96-2.18l-2.92-2.27c-.81.54-1.85.86-3.04.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.34C2.44 15.98 5.48 18 9 18z"/><path fill="#FBBC05" d="M3.97 10.7A5.4 5.4 0 0 1 3.68 9c0-.59.1-1.17.29-1.7V4.96H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.04l3.01-2.34z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.59-2.59C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l3.01 2.34C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
+          Continue with Google
+        </button>
+        <div class="auth-switch">
+          Already have an account? <a onclick="navigate('login')">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORGOT PASSWORD PAGE -->
+  <div id="forgotPasswordPage" class="page">
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="auth-header">
+          <h1>Reset Password</h1>
+          <p>Enter your email to receive reset instructions</p>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="resetEmail" placeholder="your@email.com">
+        </div>
+        <div id="resetError" class="alert alert-danger hidden"></div>
+        <button class="btn btn-primary btn-block" onclick="submitPasswordReset()">Send Reset Link</button>
+        <div class="auth-divider"></div>
+        <div class="auth-switch">
+          <a onclick="navigate('login')">← Back to sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD PAGE -->
+  <div id="dashboardPage" class="page">
+    <section class="container" style="padding: 2rem;">
+      <div id="trialBanner" class="trial-banner hidden">
+        <div class="trial-info">
+          <h3>🎉 Free Trial Active</h3>
+          <p id="trialDaysText">You have 15 days remaining</p>
+          <div class="trial-progress">
+            <div class="trial-progress-bar" id="trialProgressBar" style="width: 100%;"></div>
+          </div>
+        </div>
+        <button class="btn" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid white;" onclick="navigate('pricing')">View Plans</button>
+      </div>
+
+      <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Dashboard</h2>
+
+      <div class="dashboard-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Websites</div>
+          <div class="stat-value" id="userWebsiteCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Storage Used</div>
+          <div class="stat-value" id="userStorageUsed">0 GB</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Monthly Views</div>
+          <div class="stat-value" id="userMonthlyViews">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Subscription</div>
+          <div class="stat-value" id="userSubscription" style="font-size: 1.2rem;">Free Trial</div>
+        </div>
+      </div>
+
+      <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem; margin-top: 2rem;">
+        <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 1.5rem;">Recent Activity</h3>
+        <div id="activityList" style="color: var(--gray); text-align: center; padding: 2rem;">
+          No recent activity
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PROFILE PAGE -->
+  <div id="profilePage" class="page">
+    <section class="container" style="padding: 2rem;">
+      <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Profile Settings</h2>
+
+      <div style="max-width: 600px;">
+        <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="profile-btn" style="width: 80px; height: 80px; font-size: 2rem;">
+              <span id="profileAvatarLarge">U</span>
+            </div>
+            <div>
+              <h3 id="profileDisplayName" style="font-family: Manrope; font-weight: 700; margin-bottom: 0.25rem;">User Name</h3>
+              <p id="profileDisplayEmail" style="color: var(--gray);">email@example.com</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="profileName" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="profileEmail" placeholder="your@email.com" disabled>
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" id="profilePhone" placeholder="(123) 456-7890">
+          </div>
+          <button class="btn btn-primary btn-block" onclick="saveProfile()">Save Changes</button>
+        </div>
+
+        <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem;">
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 1.5rem;">Change Password</h3>
+          <div class="form-group">
+            <label>Current Password</label>
+            <input type="password" id="currentPassword" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" id="newPassword" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="••••••••">
+          </div>
+          <div id="passwordError" class="alert alert-danger hidden"></div>
+          <button class="btn btn-primary btn-block" onclick="changePassword()">Update Password</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SETTINGS PAGE -->
+  <div id="settingsPage" class="page">
+    <section class="container" style="padding: 2rem;">
+      <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Settings</h2>
+
+      <div style="max-width: 600px;">
+        <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 1.5rem;">Email Preferences</h3>
+          <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer; margin-bottom: 1rem;">
+            <input type="checkbox" id="emailNotifications" checked>
+            <span>Receive email notifications</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer; margin-bottom: 1rem;">
+            <input type="checkbox" id="weeklyDigest" checked>
+            <span>Weekly digest emails</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+            <input type="checkbox" id="marketing">
+            <span>Marketing and promotional emails</span>
+          </label>
+        </div>
+
+        <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem;">
+          <h3 style="font-family: Manrope; font-weight: 700; margin-bottom: 1.5rem; color: var(--danger);">Danger Zone</h3>
+          <button class="btn btn-block" style="background: var(--danger); color: white; border: none;" onclick="deleteAccount()">Delete Account</button>
+          <p style="color: var(--gray); font-size: 0.85rem; margin-top: 1rem;">This action cannot be undone.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div id="adminPage" class="page">
+    <div class="admin-wrapper">
+      <div class="admin-sidebar">
+        <div class="admin-logo">
+          <h3>Admin Panel</h3>
+          <p>Administrator</p>
+        </div>
+        <ul class="sidebar-menu">
+          <li class="sidebar-item active" onclick="switchAdminTab('dashboard', event)">📊 Dashboard</li>
+          <li class="sidebar-item" onclick="switchAdminTab('users', event)">👥 Users</li>
+          <li class="sidebar-item" onclick="switchAdminTab('subscriptions', event)">💳 Subscriptions</li>
+          <li class="sidebar-item" onclick="switchAdminTab('visitors', event)">👣 Visitors</li>
+          <li class="sidebar-item" onclick="switchAdminTab('messages', event)">✉️ Messages</li>
+          <li class="sidebar-item" onclick="switchAdminTab('analytics', event)">📈 Analytics</li>
+          <li class="sidebar-item" onclick="switchAdminTab('settings', event)">⚙️ Settings</li>
+          <li class="sidebar-item" style="color: rgba(255,255,255,0.7); margin-top: 2rem;" onclick="logoutAdmin()">🚪 Exit Admin</li>
+        </ul>
+      </div>
+
+      <div class="admin-content">
+        <!-- DASHBOARD -->
+        <div id="adminDashboard" class="admin-section active">
+          <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Dashboard</h2>
+
+          <div class="dashboard-grid">
+            <div class="stat-card">
+              <div class="stat-label">Total Users</div>
+              <div class="stat-value" id="adminTotalUsers">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Total Visitors</div>
+              <div class="stat-value" id="adminTotalVisitors">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Active Trials</div>
+              <div class="stat-value" id="adminActiveTrials">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Paid Subscriptions</div>
+              <div class="stat-value" id="adminPaidSubs">0</div>
+            </div>
+          </div>
+
+          <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 2rem;">
+            <div style="padding: 1.5rem; border-bottom: 1.5px solid var(--border);">
+              <h3 style="font-family: Manrope; font-weight: 700;">Recent Users</h3>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr><th>Name</th><th>Email</th><th>Status</th><th>Joined</th></tr>
+                </thead>
+                <tbody id="adminRecentUsers">
+                  <tr style="color: var(--gray); text-align: center;"><td colspan="4" style="padding: 2rem;">No users yet</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- USERS -->
+        <div id="adminUsers" class="admin-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700;">Users</h2>
+          </div>
+
+          <div class="admin-toolbar">
+            <input type="text" class="admin-search" id="adminUserSearch" placeholder="Search by name or email…" oninput="updateAdminDashboard()">
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th><th>Email</th><th>Password</th><th>Plan</th>
+                  <th>Trial Days</th><th>Status</th><th>Joined</th><th>Message</th><th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersList">
+                <tr style="color: var(--gray); text-align: center;"><td colspan="9" style="padding: 2rem;">No users found</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SUBSCRIPTIONS -->
+        <div id="adminSubscriptions" class="admin-section">
+          <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Subscriptions</h2>
+
+          <div class="dashboard-grid">
+            <div class="stat-card">
+              <div class="stat-label">Active Subscriptions</div>
+              <div class="stat-value" id="adminActiveSubs">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Monthly Revenue</div>
+              <div class="stat-value" id="adminMonthlyRevenue">$0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Churn Rate</div>
+              <div class="stat-value">0%</div>
+            </div>
+          </div>
+
+          <div class="table-wrapper" style="margin-top: 2rem;">
+            <table>
+              <thead>
+                <tr><th>User</th><th>Plan</th><th>Status</th><th>Started</th><th>Renews</th></tr>
+              </thead>
+              <tbody id="adminSubsList">
+                <tr style="color: var(--gray); text-align: center;"><td colspan="5" style="padding: 2rem;">No subscriptions</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- VISITORS -->
+        <div id="adminVisitors" class="admin-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700;">Visitors</h2>
+            <button class="btn btn-small btn-outline" onclick="updateAdminDashboard()">↻ Refresh</button>
+          </div>
+          <p style="color: var(--gray); margin-bottom: 1.5rem;">Everyone who registered, logged in, or contacted you through the site — where they came in and when.</p>
+
+          <div class="admin-toolbar">
+            <button class="btn btn-small btn-outline visitor-filter active" data-filter="all" onclick="setVisitorFilter('all', event)">All</button>
+            <button class="btn btn-small btn-outline visitor-filter" data-filter="signup" onclick="setVisitorFilter('signup', event)">Sign Ups</button>
+            <button class="btn btn-small btn-outline visitor-filter" data-filter="login" onclick="setVisitorFilter('login', event)">Sign Ins</button>
+            <button class="btn btn-small btn-outline visitor-filter" data-filter="contact" onclick="setVisitorFilter('contact', event)">Contact</button>
+            <button class="btn btn-small btn-outline visitor-filter" data-filter="pageview" onclick="setVisitorFilter('pageview', event)">Page Views</button>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>Type</th><th>Name</th><th>Email</th><th>Came In From</th><th>Device</th><th>Time</th></tr>
+              </thead>
+              <tbody id="adminVisitorsList">
+                <tr style="color: var(--gray); text-align: center;"><td colspan="6" style="padding: 2rem;">No visitors yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- MESSAGES -->
+        <div id="adminMessages" class="admin-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700;">Messages</h2>
+            <button class="btn btn-small btn-outline" onclick="updateAdminDashboard()">↻ Refresh</button>
+          </div>
+          <p style="color: var(--gray); margin-bottom: 1.5rem;">Messages people submitted through the Contact form, with what they want and how to reach them.</p>
+
+          <div id="adminMessagesList"></div>
+        </div>
+
+        <!-- ANALYTICS -->
+        <div id="adminAnalytics" class="admin-section">
+          <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Analytics</h2>
+
+          <div class="dashboard-grid">
+            <div class="stat-card">
+              <div class="stat-label">Total Page Views</div>
+              <div class="stat-value" id="adminPageViews">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Unique Visitors</div>
+              <div class="stat-value" id="adminUniqueVisitors">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Conversion Rate</div>
+              <div class="stat-value">0%</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Avg. Session</div>
+              <div class="stat-value">0s</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="adminSettings" class="admin-section">
+          <h2 style="font-family: Manrope; font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">Settings</h2>
+
+          <div style="background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 2rem; max-width: 600px;">
+            <div class="form-group">
+              <label>Free Trial Length</label>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <button type="button" class="btn btn-outline btn-small" onclick="adjustTrialAmount(-1)" style="width: 2.5rem; font-size: 1.1rem;">−</button>
+                <input type="number" min="1" value="15" id="adminTrialAmount" oninput="updateTrialDaysPreview()" style="text-align: center;">
+                <button type="button" class="btn btn-outline btn-small" onclick="adjustTrialAmount(1)" style="width: 2.5rem; font-size: 1.1rem;">+</button>
+                <select id="adminTrialUnit" onchange="updateTrialDaysPreview()" style="max-width: 130px;">
+                  <option value="1">Days</option>
+                  <option value="7">Weeks</option>
+                  <option value="30">Months</option>
+                </select>
+              </div>
+              <p id="adminTrialPreview" style="color: var(--gray); font-size: 0.85rem; margin-top: 0.5rem;">= 15 days total</p>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="saveAdminSettings()">Save Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>VSK Studio</h4>
+        <a href="#" onclick="navigate('home'); return false;">Home</a>
+        <a href="#" onclick="navigate('about'); return false;">About Us</a>
+        <a href="#" onclick="navigate('contact'); return false;">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h4>Product</h4>
+        <a href="#" onclick="navigate('features'); return false;">Features</a>
+        <a href="#" onclick="navigate('pricing'); return false;">Pricing</a>
+        <a href="#">Security</a>
+      </div>
+      <div class="footer-section">
+        <h4>Company</h4>
+        <a href="#">Blog</a>
+        <a href="#">Documentation</a>
+        <a href="#">Status</a>
+      </div>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#" onclick="openAdminPanel(); return false;">Admin</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 VSK Studio. All rights reserved. | Built with ❤️ for creators</p>
+    </div>
+  </footer>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 3000; pointer-events: none;"></div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // CLOUD SETUP — do this once so data syncs from anywhere in the world
+    // ═══════════════════════════════════════════════════════════════
+    // 1. Go to https://console.firebase.google.com → "Add project" (free).
+    // 2. In your new project, click the </> (web) icon to register a web app.
+    // 3. Copy the firebaseConfig object it gives you and paste it below,
+    //    replacing the placeholder values.
+    // 4. In the left menu go to Build → Firestore Database → Create database
+    //    → pick "Start in test mode" (fine for getting this running quickly).
+    // 5. For the "Continue with Google" buttons to work: in the left menu go
+    //    to Build → Authentication → Get started → click "Google" in the
+    //    Sign-in method list → toggle Enable → pick a support email → Save.
+    // 6. Save this file, re-upload/host it, and reload the page — the
+    //    yellow "cloud sync isn't set up" banner at the top will disappear
+    //    once it's connected.
+    // Until this is filled in, the site still works, but data only saves
+    // on each visitor's own device (the old behavior).
+    const firebaseConfig = {
+      apiKey: "AIzaSyAyA9A_B9ZoXjdjj-CneHZCUxl3iPUQkPc",
+      authDomain: "vsk-studio.firebaseapp.com",
+      projectId: "vsk-studio",
+      storageBucket: "vsk-studio.firebasestorage.app",
+      messagingSenderId: "271017862110",
+      appId: "1:271017862110:web:89c7fa3b604d24c4ffb34f"
+    };
+
+    let fsdb = null;
+    let fsauth = null;
+    let usersLoaded = false;
+
+    // ─── DATABASE (falls back to this device's storage until cloud is set up) ───
+    const db = {
+      users: JSON.parse(localStorage.getItem('vsk_users') || '[]'),
+      settings: JSON.parse(localStorage.getItem('vsk_settings') || '{"trialDays": 15}'),
+    };
+    let contacts = JSON.parse(localStorage.getItem('vsk_admin_contacts') || '[]').slice().reverse();
+    let visitorsAll = JSON.parse(localStorage.getItem('vsk_admin_visitors') || '[]').slice().reverse();
+
+    function initFirebase() {
+      if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY') {
+        const banner = document.getElementById('setupBanner');
+        if (banner) banner.style.display = 'block';
+        usersLoaded = true; // let the site work in local-only mode
+        return;
+      }
+
+      firebase.initializeApp(firebaseConfig);
+      fsdb = firebase.firestore();
+      fsauth = firebase.auth();
+
+      fsdb.collection('users').onSnapshot(snap => {
+        db.users = snap.docs.map(d => d.data());
+        usersLoaded = true;
+        const storedEmail = localStorage.getItem('vsk_currentUser');
+        if (storedEmail) {
+          const fresh = db.users.find(u => u.email === storedEmail);
+          if (fresh) { currentUser = fresh; updateNavForLoggedIn(); }
+        }
+        if (adminLoggedIn) updateAdminDashboard();
+      }, err => { console.error('Firestore users error:', err); usersLoaded = true; });
+
+      fsdb.collection('contacts').onSnapshot(snap => {
+        contacts = snap.docs.map(d => d.data())
+          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        if (adminLoggedIn) updateAdminDashboard();
+      }, err => console.error('Firestore contacts error:', err));
+
+      fsdb.collection('visitors').onSnapshot(snap => {
+        visitorsAll = snap.docs.map(d => d.data())
+          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        if (adminLoggedIn) updateAdminDashboard();
+      }, err => console.error('Firestore visitors error:', err));
+
+      fsdb.collection('settings').doc('main').onSnapshot(doc => {
+        if (doc.exists) db.settings = doc.data();
+      }, err => console.error('Firestore settings error:', err));
+    }
+
+    initFirebase();
+
+    // ─── User write helpers (write to the cloud when configured, ───
+    // ─── otherwise fall back to this device's storage)             ───
+    function fsAddUser(user) {
+      db.users.push(user);
+      if (fsdb) {
+        fsdb.collection('users').doc(user.id).set(user).catch(e => console.error(e));
+      } else {
+        localStorage.setItem('vsk_users', JSON.stringify(db.users));
+      }
+    }
+
+    function fsSaveUser(user) {
+      const idx = db.users.findIndex(u => u.id === user.id);
+      if (idx !== -1) db.users[idx] = user; else db.users.push(user);
+      if (fsdb) {
+        fsdb.collection('users').doc(user.id).set(user, { merge: true }).catch(e => console.error(e));
+      } else {
+        localStorage.setItem('vsk_users', JSON.stringify(db.users));
+      }
+    }
+
+    function fsDeleteUser(userId) {
+      const idx = db.users.findIndex(u => u.id === userId);
+      if (idx !== -1) db.users.splice(idx, 1);
+      if (fsdb) {
+        fsdb.collection('users').doc(userId).delete().catch(e => console.error(e));
+      } else {
+        localStorage.setItem('vsk_users', JSON.stringify(db.users));
+      }
+    }
+
+    let currentUser = null;
+
+    // ─── INITIALIZATION ─── 
+    function init() {
+      const userEmail = localStorage.getItem('vsk_currentUser');
+
+      if (userEmail) {
+        currentUser = db.users.find(u => u.email === userEmail);
+        if (currentUser) updateNavForLoggedIn();
+      }
+
+      if (adminLoggedIn) {
+        navigate('admin');
+        updateAdminDashboard();
+        startAdminAutoRefresh();
+      }
+
+      populateCountryCodes();
+      window.addEventListener('scroll', handleNavScroll);
+      document.addEventListener('click', handleDocumentClick);
+    }
+
+    function handleNavScroll() {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.style.boxShadow = '0 4px 12px rgba(16, 32, 28, 0.1)';
+      } else {
+        nav.style.boxShadow = '0 2px 8px rgba(16, 32, 28, 0.08)';
+      }
+    }
+
+    function handleDocumentClick(e) {
+      const menu = document.getElementById('profileMenu');
+      const btn = document.getElementById('profileBtn');
+      if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('active');
+      }
+    }
+
+    // ─── NAVIGATION ─── 
+    function navigate(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const targetPage = document.getElementById(page + 'Page');
+      if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo(0, 0);
+      }
+      closeMobileMenu();
+
+      if (page !== 'admin') {
+        stopAdminAutoRefresh();
+      }
+
+      // Track general site traffic for the admin panel (skip the admin's own page)
+      if (page !== 'admin') {
+        vskLogVisit(
+          currentUser ? currentUser.name : 'Anonymous',
+          currentUser ? currentUser.email : '',
+          '/' + page,
+          window.location.href
+        );
+      }
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('hamburger').classList.toggle('active');
+      document.getElementById('mobileMenu').classList.toggle('active');
+    }
+
+    function closeMobileMenu() {
+      document.getElementById('hamburger').classList.remove('active');
+      document.getElementById('mobileMenu').classList.remove('active');
+    }
+
+    function toggleProfileMenu() {
+      document.getElementById('profileMenu').classList.toggle('active');
+    }
+
+    // ─── AUTHENTICATION ─── 
+    let googleSignInInProgress = false;
+
+    function signInWithGoogle() {
+      if (googleSignInInProgress) return; // ignore double-clicks / repeat calls
+
+      if (window.location.protocol === 'file:') {
+        showToast('Google sign-in only works on the live website link (e.g. your Netlify/GitHub Pages URL) — not when opening this file directly.', 'error');
+        return;
+      }
+      if (!fsauth) {
+        showToast('Cloud sign-in isn\'t set up yet — see the Firebase setup steps in the code comments.', 'error');
+        return;
+      }
+      if (!usersLoaded) {
+        showToast('Still loading data — please try again in a moment.', 'warning');
+        return;
+      }
+
+      const provider = new firebase.auth.GoogleAuthProvider();
+      googleSignInInProgress = true;
+      fsauth.signInWithPopup(provider).then(result => {
+        const gUser = result.user;
+        const email = (gUser.email || '').toLowerCase();
+        let user = db.users.find(u => u.email === email);
+        let isNewUser = false;
+
+        if (!user) {
+          isNewUser = true;
+          const trialDays = parseInt(db.settings.trialDays) || 15;
+          const trialExpiresAt = new Date();
+          trialExpiresAt.setDate(trialExpiresAt.getDate() + trialDays);
+
+          user = {
+            id: 'user_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+            name: gUser.displayName || email.split('@')[0],
+            email: email,
+            password: null, // signed in via Google, no local password
+            authProvider: 'google',
+            status: 'trial',
+            plan: 'free_trial',
+            trialExpiresAt: trialExpiresAt.toISOString(),
+            emailVerified: true,
+            createdAt: new Date().toLocaleDateString()
+          };
+          fsAddUser(user);
+        }
+
+        currentUser = user;
+        localStorage.setItem('vsk_currentUser', email);
+        updateNavForLoggedIn();
+        vskLogVisit(user.name, user.email, '/dashboard', window.location.href, isNewUser ? 'signup' : 'login');
+        navigate('dashboard');
+        showToast(isNewUser ? 'Account created with Google!' : 'Signed in with Google!', 'success');
+      }).catch(err => {
+        // Harmless — happens if the button gets clicked more than once quickly
+        if (err.code === 'auth/cancelled-popup-request' || err.code === 'auth/popup-closed-by-user') {
+          return;
+        }
+        console.error(err);
+        showToast('Google sign-in failed: ' + err.message, 'error');
+      }).finally(() => {
+        googleSignInInProgress = false;
+      });
+    }
+
+    function submitLogin() {
+      if (!usersLoaded) {
+        showToast('Still loading data — please try again in a moment.', 'warning');
+        return;
+      }
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value;
+      const errorEl = document.getElementById('loginError');
+
+      clearError(errorEl);
+
+      if (!email || !password) {
+        showError(errorEl, 'Please fill in all fields');
+        return;
+      }
+
+      const user = db.users.find(u => u.email === email);
+      if (!user || user.password !== password) {
+        showError(errorEl, 'Invalid email or password');
+        // Log failed attempt
+        vskLogEmailLogin(email, 'failed', 'Wrong credentials');
+        return;
+      }
+
+      // ── Block suspended accounts ──
+      if (user.suspended) {
+        showError(errorEl, 'Your account has been suspended. Please contact support.');
+        vskLogEmailLogin(email, 'blocked', 'Account suspended');
+        return;
+      }
+
+      // Log successful login
+      vskLogEmailLogin(email, 'success', 'Login OK');
+      // Log visitor
+      vskLogVisit(user.name, user.email, '/dashboard', window.location.href, 'login');
+
+      // Check if trial expired and not paid
+      if (user.trialExpiresAt && new Date() > new Date(user.trialExpiresAt) && user.status !== 'paid') {
+        currentUser = user;
+        localStorage.setItem('vsk_currentUser', email);
+        navigate('pricing');
+        showToast('Your free trial has expired. Please choose a plan to continue.', 'warning');
+        return;
+      }
+
+      currentUser = user;
+      localStorage.setItem('vsk_currentUser', email);
+      updateNavForLoggedIn();
+      navigate('dashboard');
+      showToast('Welcome back, ' + user.name + '!', 'success');
+    }
+
+    // ── Log email login events (not shown in admin UI yet, kept for completeness) ──
+    function vskLogEmailLogin(email, status, note) {
+      const entry = {
+        id: 'l_' + Date.now().toString(36) + Math.random().toString(36).slice(2,5),
+        email,
+        status,   // 'success' | 'failed' | 'blocked'
+        note,
+        timestamp: new Date().toISOString(),
+        device: navigator.userAgent
+      };
+      if (fsdb) {
+        fsdb.collection('email_logins').doc(entry.id).set(entry).catch(e => console.error(e));
+      } else {
+        try {
+          const logins = JSON.parse(localStorage.getItem('vsk_admin_email_logins') || '[]');
+          logins.push(entry);
+          localStorage.setItem('vsk_admin_email_logins', JSON.stringify(logins));
+        } catch(e) {}
+      }
+    }
+
+    function submitRegister() {
+      if (!usersLoaded) {
+        showToast('Still loading data — please try again in a moment.', 'warning');
+        return;
+      }
+      const name = document.getElementById('registerName').value.trim();
+      const email = document.getElementById('registerEmail').value.trim().toLowerCase();
+      const password = document.getElementById('registerPassword').value;
+      const confirm = document.getElementById('registerConfirm').value;
+      const errorEl = document.getElementById('registerError');
+
+      clearError(errorEl);
+
+      if (!name || !email || !password || !confirm) {
+        showError(errorEl, 'Please fill in all fields');
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        showError(errorEl, 'Please enter a valid email');
+        return;
+      }
+
+      if (password.length < 8) {
+        showError(errorEl, 'Password must be at least 8 characters');
+        return;
+      }
+
+      if (password !== confirm) {
+        showError(errorEl, 'Passwords do not match');
+        return;
+      }
+
+      if (db.users.find(u => u.email === email)) {
+        showError(errorEl, 'An account with this email already exists');
+        return;
+      }
+
+      // Create new user with 15-day trial
+      const trialDays = parseInt(db.settings.trialDays) || 15;
+      const trialExpiresAt = new Date();
+      trialExpiresAt.setDate(trialExpiresAt.getDate() + trialDays);
+
+      const newUser = {
+        id: 'user_' + Date.now(),
+        name,
+        email,
+        password,
+        phone: '',
+        plan: 'free_trial',
+        status: 'trial',
+        trialStartedAt: new Date().toISOString(),
+        trialExpiresAt: trialExpiresAt.toISOString(),
+        createdAt: new Date().toLocaleDateString(),
+        emailVerified: false,
+        activity: []
+      };
+
+      fsAddUser(newUser);
+
+      // Simulate email verification
+      showToast('Account created! Check your email for verification link.', 'success');
+      
+      // Auto-verify for demo
+      newUser.emailVerified = true;
+      fsSaveUser(newUser);
+
+      currentUser = newUser;
+      localStorage.setItem('vsk_currentUser', email);
+      updateNavForLoggedIn();
+      navigate('dashboard');
+      // Log registration as a visitor event
+      vskLogVisit(name, email, '/register', window.location.href, 'signup');
+      vskLogEmailLogin(email, 'success', 'New registration');
+      showToast('Welcome to VSK Studio! You have 15 days of free trial.', 'success');
+    }
+
+    function submitPasswordReset() {
+      const email = document.getElementById('resetEmail').value.trim().toLowerCase();
+      const errorEl = document.getElementById('resetError');
+
+      clearError(errorEl);
+
+      if (!email) {
+        showError(errorEl, 'Please enter your email');
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        showError(errorEl, 'Please enter a valid email');
+        return;
+      }
+
+      const user = db.users.find(u => u.email === email);
+      if (!user) {
+        showError(errorEl, 'No account found with this email');
+        return;
+      }
+
+      // Simulate sending email
+      showToast('✓ Password reset email sent to ' + email, 'success');
+      
+      // For demo purposes, set a temporary password
+      const tempPassword = 'TempPass' + Math.random().toString(36).substr(2, 9);
+      console.log('Demo: Temporary password would be: ' + tempPassword);
+      
+      navigate('login');
+    }
+
+    function updateNavForLoggedIn() {
+      const userNav = document.getElementById('userNav');
+      const guestNav = document.getElementById('guestNav');
+
+      if (currentUser) {
+        userNav.classList.remove('hidden');
+        guestNav.classList.add('hidden');
+        document.getElementById('userInitial').textContent = currentUser.name.charAt(0).toUpperCase();
+        document.getElementById('profileDisplayName').textContent = currentUser.name;
+        document.getElementById('profileDisplayEmail').textContent = currentUser.email;
+        document.getElementById('profileName').value = currentUser.name;
+        document.getElementById('profileEmail').value = currentUser.email;
+        document.getElementById('profilePhone').value = currentUser.phone || '';
+        document.getElementById('profileAvatarLarge').textContent = currentUser.name.charAt(0).toUpperCase();
+
+        // Show trial banner if in trial
+        if (currentUser.status === 'trial') {
+          const banner = document.getElementById('trialBanner');
+          banner.classList.remove('hidden');
+          updateTrialBanner();
+        }
+      } else {
+        userNav.classList.add('hidden');
+        guestNav.classList.remove('hidden');
+      }
+    }
+
+    function updateTrialBanner() {
+      if (!currentUser || currentUser.status !== 'trial') return;
+
+      const expiresAt = new Date(currentUser.trialExpiresAt);
+      const now = new Date();
+      const daysRemaining = Math.ceil((expiresAt - now) / (1000 * 60 * 60 * 24));
+
+      if (daysRemaining <= 0) {
+        navigate('pricing');
+        return;
+      }
+
+      document.getElementById('trialDaysText').textContent = `You have ${daysRemaining} day${daysRemaining !== 1 ? 's' : ''} remaining`;
+      const progress = (daysRemaining / 15) * 100;
+      document.getElementById('trialProgressBar').style.width = progress + '%';
+    }
+
+    function selectPlan(plan) {
+      if (!currentUser) {
+        navigate('register');
+        return;
+      }
+
+      currentUser.selectedPlan = plan;
+      fsSaveUser(currentUser);
+
+      const planNames = { starter: 'Starter', professional: 'Professional', enterprise: 'Enterprise' };
+      const planName = planNames[plan] || plan;
+
+      navigate('contact');
+      document.getElementById('contactName').value = currentUser.name || '';
+      document.getElementById('contactEmail').value = currentUser.email || '';
+      document.getElementById('contactSubject').value = 'Interested in the ' + planName + ' plan';
+      document.getElementById('contactMessage').value =
+        `Hi, I'd like to sign up for the ${planName} plan. Please get in touch with the details.`;
+
+      showToast('Send us a message and we\'ll set up your ' + planName + ' plan!', 'success');
+    }
+
+    function saveProfile() {
+      if (!currentUser) return;
+
+      currentUser.name = document.getElementById('profileName').value.trim();
+      currentUser.phone = document.getElementById('profilePhone').value.trim();
+
+      fsSaveUser(currentUser);
+
+      updateNavForLoggedIn();
+      showToast('Profile updated successfully!', 'success');
+    }
+
+    function changePassword() {
+      if (!currentUser) return;
+
+      const current = document.getElementById('currentPassword').value;
+      const newPass = document.getElementById('newPassword').value;
+      const confirm = document.getElementById('confirmPassword').value;
+      const errorEl = document.getElementById('passwordError');
+
+      clearError(errorEl);
+
+      if (!current || !newPass || !confirm) {
+        showError(errorEl, 'Please fill in all fields');
+        return;
+      }
+
+      if (current !== currentUser.password) {
+        showError(errorEl, 'Current password is incorrect');
+        return;
+      }
+
+      if (newPass.length < 8) {
+        showError(errorEl, 'New password must be at least 8 characters');
+        return;
+      }
+
+      if (newPass !== confirm) {
+        showError(errorEl, 'Passwords do not match');
+        return;
+      }
+
+      currentUser.password = newPass;
+      fsSaveUser(currentUser);
+
+      document.getElementById('currentPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+      showToast('Password changed successfully!', 'success');
+    }
+
+    function deleteAccount() {
+      if (!confirm('Are you sure? This action cannot be undone.')) return;
+
+      fsDeleteUser(currentUser.id);
+
+      logout();
+      showToast('Account deleted', 'success');
+    }
+
+    // ── Country dial codes (used for the Contact form phone field) ──
+    const countryDialCodes = [
+      ["United States","+1"],["Canada","+1"],["United Kingdom","+44"],["India","+91"],
+      ["Australia","+61"],["New Zealand","+64"],["Ireland","+353"],["Germany","+49"],
+      ["France","+33"],["Italy","+39"],["Spain","+34"],["Portugal","+351"],["Netherlands","+31"],
+      ["Belgium","+32"],["Switzerland","+41"],["Austria","+43"],["Sweden","+46"],["Norway","+47"],
+      ["Denmark","+45"],["Finland","+358"],["Iceland","+354"],["Poland","+48"],["Czech Republic","+420"],
+      ["Slovakia","+421"],["Hungary","+36"],["Romania","+40"],["Bulgaria","+359"],["Greece","+30"],
+      ["Turkey","+90"],["Russia","+7"],["Ukraine","+380"],["Belarus","+375"],["Estonia","+372"],
+      ["Latvia","+371"],["Lithuania","+370"],["Croatia","+385"],["Serbia","+381"],["Slovenia","+386"],
+      ["Bosnia and Herzegovina","+387"],["North Macedonia","+389"],["Montenegro","+382"],["Albania","+355"],
+      ["Moldova","+373"],["Malta","+356"],["Cyprus","+357"],["Luxembourg","+352"],["Monaco","+377"],
+      ["Andorra","+376"],["Liechtenstein","+423"],["San Marino","+378"],["Vatican City","+379"],
+      ["China","+86"],["Japan","+81"],["South Korea","+82"],["North Korea","+850"],["Taiwan","+886"],
+      ["Hong Kong","+852"],["Macau","+853"],["Mongolia","+976"],["Vietnam","+84"],["Thailand","+66"],
+      ["Cambodia","+855"],["Laos","+856"],["Myanmar","+95"],["Malaysia","+60"],["Singapore","+65"],
+      ["Indonesia","+62"],["Philippines","+63"],["Brunei","+673"],["East Timor","+670"],
+      ["Pakistan","+92"],["Bangladesh","+880"],["Sri Lanka","+94"],["Nepal","+977"],["Bhutan","+975"],
+      ["Maldives","+960"],["Afghanistan","+93"],["Iran","+98"],["Iraq","+964"],["Israel","+972"],
+      ["Palestine","+970"],["Jordan","+962"],["Lebanon","+961"],["Syria","+963"],["Saudi Arabia","+966"],
+      ["United Arab Emirates","+971"],["Qatar","+974"],["Kuwait","+965"],["Bahrain","+973"],["Oman","+968"],
+      ["Yemen","+967"],["Kazakhstan","+7"],["Uzbekistan","+998"],["Turkmenistan","+993"],["Tajikistan","+992"],
+      ["Kyrgyzstan","+996"],["Azerbaijan","+994"],["Armenia","+374"],["Georgia","+995"],
+      ["Egypt","+20"],["Libya","+218"],["Tunisia","+216"],["Algeria","+213"],["Morocco","+212"],
+      ["Sudan","+249"],["South Sudan","+211"],["Ethiopia","+251"],["Eritrea","+291"],["Djibouti","+253"],
+      ["Somalia","+252"],["Kenya","+254"],["Uganda","+256"],["Tanzania","+255"],["Rwanda","+250"],
+      ["Burundi","+257"],["Nigeria","+234"],["Ghana","+233"],["Ivory Coast","+225"],["Senegal","+221"],
+      ["Mali","+223"],["Niger","+227"],["Burkina Faso","+226"],["Guinea","+224"],["Sierra Leone","+232"],
+      ["Liberia","+231"],["Togo","+228"],["Benin","+229"],["Cameroon","+237"],["Chad","+235"],
+      ["Central African Republic","+236"],["Gabon","+241"],["Congo (Republic)","+242"],
+      ["Congo (DRC)","+243"],["Angola","+244"],["Zambia","+260"],["Zimbabwe","+263"],["Malawi","+265"],
+      ["Mozambique","+258"],["Namibia","+264"],["Botswana","+267"],["South Africa","+27"],
+      ["Lesotho","+266"],["Eswatini","+268"],["Madagascar","+261"],["Mauritius","+230"],
+      ["Seychelles","+248"],["Comoros","+269"],["Cape Verde","+238"],["Gambia","+220"],
+      ["Guinea-Bissau","+245"],["Equatorial Guinea","+240"],["Sao Tome and Principe","+239"],
+      ["Mexico","+52"],["Guatemala","+502"],["Belize","+501"],["El Salvador","+503"],["Honduras","+504"],
+      ["Nicaragua","+505"],["Costa Rica","+506"],["Panama","+507"],["Cuba","+53"],["Jamaica","+1"],
+      ["Haiti","+509"],["Dominican Republic","+1"],["Bahamas","+1"],["Trinidad and Tobago","+1"],
+      ["Barbados","+1"],["Brazil","+55"],["Argentina","+54"],["Chile","+56"],["Colombia","+57"],
+      ["Peru","+51"],["Venezuela","+58"],["Ecuador","+593"],["Bolivia","+591"],["Paraguay","+595"],
+      ["Uruguay","+598"],["Guyana","+592"],["Suriname","+597"],
+      ["Fiji","+679"],["Papua New Guinea","+675"],["Samoa","+685"],["Tonga","+676"],["Vanuatu","+678"],
+      ["Solomon Islands","+677"],["Kiribati","+686"],["Micronesia","+691"],["Palau","+680"],
+      ["Marshall Islands","+692"],["Nauru","+674"],["Tuvalu","+688"]
+    ];
+
+    function populateCountryCodes() {
+      const select = document.getElementById('contactCountryCode');
+      if (!select) return;
+      select.innerHTML = countryDialCodes
+        .map(([name, dial]) => `<option value="${dial}">${dial} ${name}</option>`)
+        .join('');
+      // Default to New Zealand, otherwise first entry
+      const nzIndex = countryDialCodes.findIndex(c => c[0] === 'New Zealand');
+      if (nzIndex !== -1) select.selectedIndex = nzIndex;
+    }
+
+    function submitContact() {
+      const name        = document.getElementById('contactName').value.trim();
+      const email       = document.getElementById('contactEmail').value.trim().toLowerCase();
+      const countryCode = (document.getElementById('contactCountryCode') ? document.getElementById('contactCountryCode').value : '');
+      const phoneRaw    = (document.getElementById('contactPhone') ? document.getElementById('contactPhone').value.trim() : '');
+      const subject     = document.getElementById('contactSubject').value.trim();
+      const message     = document.getElementById('contactMessage').value.trim();
+      const errorEl     = document.getElementById('contactError');
+
+      clearError(errorEl);
+
+      if (!name || !email || !phoneRaw || !subject || !message) {
+        showError(errorEl, 'Please fill in all fields, including your phone number');
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        showError(errorEl, 'Please enter a valid email');
+        return;
+      }
+
+      const digitsOnly = phoneRaw.replace(/[^0-9]/g, '');
+      if (digitsOnly.length < 10 || digitsOnly.length > 11) {
+        showError(errorEl, 'Phone number must be 10–11 digits');
+        return;
+      }
+
+      const phone = countryCode + ' ' + phoneRaw;
+
+      // ── Save to Admin Panel (cloud when configured, this device otherwise) ──
+      const entry = {
+        id: 'c_' + Date.now().toString(36) + Math.random().toString(36).slice(2,5),
+        name, email, phone, subject, message,
+        timestamp: new Date().toISOString(),
+        read: false,
+        source: window.location.href
+      };
+      if (fsdb) {
+        fsdb.collection('contacts').doc(entry.id).set(entry).catch(e => console.error(e));
+      } else {
+        try {
+          const localContacts = JSON.parse(localStorage.getItem('vsk_admin_contacts') || '[]');
+          localContacts.push(entry);
+          localStorage.setItem('vsk_admin_contacts', JSON.stringify(localContacts));
+          contacts = localContacts.slice().reverse();
+        } catch(e) {}
+      }
+
+      // ── Log visitor page visit ──
+      vskLogVisit(name, email, '/contact', window.location.href, 'contact');
+
+      showToast('✓ Message sent! We\'ll get back to you soon.', 'success');
+      document.getElementById('contactName').value = '';
+      document.getElementById('contactEmail').value = '';
+      if (document.getElementById('contactPhone')) document.getElementById('contactPhone').value = '';
+      document.getElementById('contactSubject').value = '';
+      document.getElementById('contactMessage').value = '';
+    }
+
+    // ── Admin Panel (embedded in this same page — no separate file, ──
+    // ── so there's nothing that can go missing or fail to connect)   ──
+    const ADMIN_PASSWORD = 'vihaan24412';
+    let adminLoggedIn = (localStorage.getItem('vsk_currentAdmin') === 'true');
+    let currentVisitorFilter = 'all';
+    let adminRefreshTimer = null;
+
+    function openAdminPanel() {
+      if (adminLoggedIn) {
+        navigate('admin');
+        updateAdminDashboard();
+        startAdminAutoRefresh();
+        return;
+      }
+      const pwd = prompt('Enter admin password:');
+      if (pwd === null) return; // cancelled
+      if (pwd !== ADMIN_PASSWORD) {
+        showToast('Incorrect admin password', 'error');
+        return;
+      }
+      adminLoggedIn = true;
+      localStorage.setItem('vsk_currentAdmin', 'true');
+      navigate('admin');
+      updateAdminDashboard();
+      startAdminAutoRefresh();
+      showToast('Admin login successful!', 'success');
+    }
+
+    function logoutAdmin() {
+      adminLoggedIn = false;
+      localStorage.removeItem('vsk_currentAdmin');
+      stopAdminAutoRefresh();
+      navigate('home');
+      showToast('Exited admin panel', 'success');
+    }
+
+    function startAdminAutoRefresh() {
+      stopAdminAutoRefresh();
+      adminRefreshTimer = setInterval(updateAdminDashboard, 2000);
+    }
+
+    function stopAdminAutoRefresh() {
+      if (adminRefreshTimer) {
+        clearInterval(adminRefreshTimer);
+        adminRefreshTimer = null;
+      }
+    }
+
+    function switchAdminTab(tab, event) {
+      document.querySelectorAll('#adminPage .admin-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('#adminPage .sidebar-item').forEach(i => i.classList.remove('active'));
+
+      const sectionId = 'admin' + tab.charAt(0).toUpperCase() + tab.slice(1);
+      document.getElementById(sectionId).classList.add('active');
+      event.target.classList.add('active');
+      updateAdminDashboard();
+      if (tab === 'settings') populateSettingsTab();
+    }
+
+    function setVisitorFilter(filter, event) {
+      currentVisitorFilter = filter;
+      document.querySelectorAll('.visitor-filter').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      updateAdminDashboard();
+    }
+
+    function updateAdminDashboard() {
+      if (!adminLoggedIn) return;
+
+      const users = db.users;
+      const settings = db.settings;
+      // contacts / visitorsAll are kept live by the Firestore listeners
+      // (or by vskLogVisit/submitContact's localStorage fallback if cloud
+      // sync isn't configured yet)
+
+      const activeTrials = users.filter(u => u.status === 'trial').length;
+      const paidSubs = users.filter(u => u.status === 'paid').length;
+
+      document.getElementById('adminTotalUsers').textContent = users.length;
+      document.getElementById('adminTotalVisitors').textContent = visitorsAll.length;
+      document.getElementById('adminActiveTrials').textContent = activeTrials;
+      document.getElementById('adminPaidSubs').textContent = paidSubs;
+
+      // Recent users
+      const recentUsers = users.slice(-5).reverse();
+      document.getElementById('adminRecentUsers').innerHTML = recentUsers.length
+        ? recentUsers.map(u => `
+            <tr>
+              <td>${u.name}</td>
+              <td>${u.email}</td>
+              <td><span style="background: ${u.status === 'paid' ? 'rgba(26, 158, 92, 0.1)' : 'rgba(255, 107, 61, 0.1)'}; color: ${u.status === 'paid' ? 'var(--success)' : 'var(--primary)'}; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">${u.status === 'paid' ? 'Paid' : 'Trial'}</span></td>
+              <td>${u.createdAt}</td>
+            </tr>
+          `).join('')
+        : '<tr style="color: var(--gray); text-align: center;"><td colspan="4" style="padding: 2rem;">No users yet</td></tr>';
+
+      // Users table — password + latest message, with search
+      const searchInput = document.getElementById('adminUserSearch');
+      const query = (searchInput ? searchInput.value.trim().toLowerCase() : '');
+      const filteredUsers = users.filter(u =>
+        !query || u.name.toLowerCase().includes(query) || u.email.toLowerCase().includes(query)
+      );
+
+      document.getElementById('adminUsersList').innerHTML = filteredUsers.length
+        ? filteredUsers.map(u => {
+            const rawDaysRemaining = u.status === 'trial'
+              ? Math.ceil((new Date(u.trialExpiresAt) - new Date()) / (1000 * 60 * 60 * 24))
+              : null;
+            const daysRemaining = rawDaysRemaining === null ? '-' : rawDaysRemaining;
+            const latestMsg = contacts.find(c => c.email === u.email);
+            const msgCell = latestMsg
+              ? `<span class="msg-chip" title="${latestMsg.message.replace(/"/g, '&quot;')}">${latestMsg.subject}: ${latestMsg.message}</span>`
+              : `<span class="msg-empty">No message</span>`;
+            const trialDaysCell = u.status === 'trial'
+              ? `<div style="display:flex; gap:0.4rem; align-items:center;">
+                   <span>${daysRemaining}</span>
+                   <button class="btn btn-small btn-outline" onclick="adminSetTrialDays('${u.id}')" title="Set exact days remaining">Edit</button>
+                 </div>`
+              : daysRemaining;
+            return `
+              <tr>
+                <td>${u.name}</td>
+                <td>${u.email}</td>
+                <td><span class="pw-chip">${u.password}</span></td>
+                <td>${u.plan === 'free_trial' ? 'Trial' : u.plan || 'None'}</td>
+                <td>${trialDaysCell}</td>
+                <td><span style="background: ${u.status === 'paid' ? 'rgba(26, 158, 92, 0.1)' : 'rgba(255, 107, 61, 0.1)'}; color: ${u.status === 'paid' ? 'var(--success)' : 'var(--primary)'}; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">${u.status === 'paid' ? 'Active' : 'Trial'}</span></td>
+                <td>${u.createdAt}</td>
+                <td>${msgCell}</td>
+                <td>
+                  ${u.status === 'paid'
+                    ? `<button class="btn btn-small btn-outline" onclick="adminSetUserPlan('${u.id}', 'trial')">Move to Trial</button>`
+                    : `<button class="btn btn-small btn-primary" onclick="adminSetUserPlan('${u.id}', 'paid')">Activate Plan</button>`}
+                </td>
+              </tr>
+            `;
+          }).join('')
+        : '<tr style="color: var(--gray); text-align: center;"><td colspan="9" style="padding: 2rem;">No users found</td></tr>';
+
+      // Subscriptions
+      document.getElementById('adminActiveSubs').textContent = paidSubs;
+      const monthlyRevenue = users.filter(u => u.status === 'paid').reduce((sum, u) => {
+        const prices = { starter: 9, professional: 29, enterprise: 0 };
+        return sum + (prices[u.plan] || 0);
+      }, 0);
+      document.getElementById('adminMonthlyRevenue').textContent = '$' + monthlyRevenue;
+
+      const subsList = users.filter(u => u.status === 'paid').map(u => `
+        <tr>
+          <td>${u.name}</td>
+          <td>${u.plan.charAt(0).toUpperCase() + u.plan.slice(1)}</td>
+          <td><span style="background: rgba(26, 158, 92, 0.1); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">Active</span></td>
+          <td>${u.subscriptionStartedAt ? new Date(u.subscriptionStartedAt).toLocaleDateString() : '-'}</td>
+          <td>${u.subscriptionRenewsAt ? new Date(u.subscriptionRenewsAt).toLocaleDateString() : '-'}</td>
+        </tr>
+      `);
+
+      document.getElementById('adminSubsList').innerHTML = subsList.length
+        ? subsList.join('')
+        : '<tr style="color: var(--gray); text-align: center;"><td colspan="5" style="padding: 2rem;">No paid subscriptions</td></tr>';
+
+      // Visitors table (filtered by type)
+      const typeLabels = {
+        signup: { text: 'Sign Up', bg: 'rgba(26, 158, 92, 0.1)', color: 'var(--success)' },
+        login: { text: 'Sign In', bg: 'rgba(255, 107, 61, 0.1)', color: 'var(--primary)' },
+        contact: { text: 'Contact', bg: 'rgba(31, 110, 99, 0.12)', color: 'var(--secondary)' },
+        pageview: { text: 'Page View', bg: 'rgba(94, 107, 102, 0.1)', color: 'var(--gray)' }
+      };
+      const filteredVisitors = currentVisitorFilter === 'all'
+        ? visitorsAll
+        : visitorsAll.filter(v => (v.type || 'pageview') === currentVisitorFilter);
+
+      document.getElementById('adminVisitorsList').innerHTML = filteredVisitors.length
+        ? filteredVisitors.map(v => {
+            const t = typeLabels[v.type || 'pageview'] || typeLabels.pageview;
+            return `
+            <tr>
+              <td><span style="background: ${t.bg}; color: ${t.color}; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem; white-space: nowrap;">${t.text}</span></td>
+              <td>${v.name}</td>
+              <td>${v.email || '-'}</td>
+              <td>${v.page || '-'}</td>
+              <td style="max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${(v.device || '').replace(/"/g, '&quot;')}">${v.device || '-'}</td>
+              <td>${new Date(v.timestamp).toLocaleString()}</td>
+            </tr>
+          `;
+          }).join('')
+        : '<tr style="color: var(--gray); text-align: center;"><td colspan="6" style="padding: 2rem;">No visitors yet</td></tr>';
+
+      // Messages
+      document.getElementById('adminMessagesList').innerHTML = contacts.length
+        ? `<div class="table-wrapper"><table>
+            <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Subject</th><th>Message</th><th>Time</th><th>Status</th></tr></thead>
+            <tbody>
+              ${contacts.map(c => `
+                <tr style="${c.read ? '' : 'font-weight: 600;'}">
+                  <td>${c.name}</td>
+                  <td>${c.email}</td>
+                  <td>${c.phone || '-'}</td>
+                  <td>${c.subject}</td>
+                  <td style="max-width: 320px; white-space: normal;">${c.message}</td>
+                  <td>${new Date(c.timestamp).toLocaleString()}</td>
+                  <td>
+                    ${c.read
+                      ? '<span style="color: var(--gray); font-size: 0.85rem;">Read</span>'
+                      : `<button class="btn btn-small btn-outline" onclick="adminMarkMessageRead('${c.id}')">Mark Read</button>`}
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table></div>`
+        : '<p style="color: var(--gray); text-align: center; padding: 2rem;">No messages yet</p>';
+
+      // Analytics
+      document.getElementById('adminPageViews').textContent = visitorsAll.length;
+      const uniqueEmails = new Set(visitorsAll.map(v => v.email).filter(Boolean));
+      document.getElementById('adminUniqueVisitors').textContent = uniqueEmails.size;
+    }
+
+    function adminMarkMessageRead(id) {
+      if (fsdb) {
+        fsdb.collection('contacts').doc(id).update({ read: true }).catch(e => console.error(e));
+      } else {
+        const localContacts = JSON.parse(localStorage.getItem('vsk_admin_contacts') || '[]');
+        const entry = localContacts.find(c => c.id === id);
+        if (entry) {
+          entry.read = true;
+          localStorage.setItem('vsk_admin_contacts', JSON.stringify(localContacts));
+        }
+      }
+      const entry = contacts.find(c => c.id === id);
+      if (entry) entry.read = true;
+      updateAdminDashboard();
+    }
+
+    function adminSetUserPlan(userId, newStatus) {
+      const user = db.users.find(u => u.id === userId);
+      if (!user) return;
+
+      if (newStatus === 'paid') {
+        user.status = 'paid';
+        user.plan = user.selectedPlan || user.plan || 'professional';
+        user.subscriptionStartedAt = new Date().toISOString();
+        const renewDate = new Date();
+        renewDate.setMonth(renewDate.getMonth() + 1);
+        user.subscriptionRenewsAt = renewDate.toISOString();
+        showToast(user.name + '\'s plan is now active', 'success');
+      } else {
+        user.status = 'trial';
+        showToast(user.name + ' moved back to trial', 'info');
+      }
+
+      fsSaveUser(user);
+      updateAdminDashboard();
+    }
+
+    function adminSetTrialDays(userId) {
+      const user = db.users.find(u => u.id === userId);
+      if (!user) return;
+
+      const currentDays = user.trialExpiresAt
+        ? Math.max(0, Math.ceil((new Date(user.trialExpiresAt) - new Date()) / (1000 * 60 * 60 * 24)))
+        : 15;
+
+      const answer = prompt(`Set exact trial days remaining for ${user.name}:`, currentDays);
+      if (answer === null) return; // cancelled
+
+      let days = parseInt(answer);
+      if (isNaN(days) || days < 0) days = 0;
+      if (days > 365) days = 365; // sanity cap to prevent typo'd huge values
+
+      const newExpiry = new Date();
+      newExpiry.setDate(newExpiry.getDate() + days);
+      user.status = 'trial';
+      user.trialExpiresAt = newExpiry.toISOString();
+
+      fsSaveUser(user);
+      updateAdminDashboard();
+      showToast(`${user.name}'s trial set to ${days} day${days !== 1 ? 's' : ''} remaining`, 'success');
+    }
+
+    function adjustTrialAmount(delta) {
+      const input = document.getElementById('adminTrialAmount');
+      const newVal = Math.max(1, (parseInt(input.value) || 1) + delta);
+      input.value = newVal;
+      updateTrialDaysPreview();
+    }
+
+    function updateTrialDaysPreview() {
+      const amount = Math.max(1, parseInt(document.getElementById('adminTrialAmount').value) || 1);
+      const unitMultiplier = parseInt(document.getElementById('adminTrialUnit').value) || 1;
+      const totalDays = amount * unitMultiplier;
+      document.getElementById('adminTrialPreview').textContent = `= ${totalDays} day${totalDays !== 1 ? 's' : ''} total`;
+    }
+
+    // Show the currently saved trial length in the friendliest unit
+    // (e.g. 30 days shown as "1 Month" rather than "30 Days")
+    function populateSettingsTab() {
+      const totalDays = parseInt(db.settings.trialDays) || 15;
+      let amount = totalDays, unit = 1;
+      if (totalDays % 30 === 0) { amount = totalDays / 30; unit = 30; }
+      else if (totalDays % 7 === 0) { amount = totalDays / 7; unit = 7; }
+
+      document.getElementById('adminTrialAmount').value = amount;
+      document.getElementById('adminTrialUnit').value = unit;
+      updateTrialDaysPreview();
+    }
+
+    function saveAdminSettings() {
+      const amount = Math.max(1, parseInt(document.getElementById('adminTrialAmount').value) || 1);
+      const unitMultiplier = parseInt(document.getElementById('adminTrialUnit').value) || 1;
+      let totalDays = amount * unitMultiplier;
+
+      if (totalDays > 365) {
+        showToast('Trial length capped at 365 days (1 year) max', 'warning');
+        totalDays = 365;
+        document.getElementById('adminTrialAmount').value = 365;
+        document.getElementById('adminTrialUnit').value = 1;
+        updateTrialDaysPreview();
+      }
+
+      db.settings.trialDays = totalDays;
+      if (fsdb) {
+        fsdb.collection('settings').doc('main').set(db.settings, { merge: true }).catch(e => console.error(e));
+      } else {
+        localStorage.setItem('vsk_settings', JSON.stringify(db.settings));
+      }
+      showToast('Settings saved successfully!', 'success');
+    }
+
+    function vskLogVisit(name, email, page, link, type) {
+      const entry = {
+        id: 'v_' + Date.now().toString(36) + Math.random().toString(36).slice(2,5),
+        name: name || 'Anonymous',
+        email: email || '',
+        page: page || window.location.pathname || '/',
+        link: link || window.location.href,
+        type: type || 'pageview', // 'signup' | 'login' | 'contact' | 'pageview'
+        device: navigator.userAgent,
+        duration: 0,
+        timestamp: new Date().toISOString()
+      };
+      if (fsdb) {
+        fsdb.collection('visitors').doc(entry.id).set(entry).catch(e => console.error(e));
+      } else {
+        try {
+          const visitors = JSON.parse(localStorage.getItem('vsk_admin_visitors') || '[]');
+          visitors.push(entry);
+          localStorage.setItem('vsk_admin_visitors', JSON.stringify(visitors));
+          visitorsAll = visitors.slice().reverse();
+        } catch(e) {}
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      localStorage.removeItem('vsk_currentUser');
+      updateNavForLoggedIn();
+      navigate('home');
+      showToast('You have been signed out', 'success');
+    }
+
+    // ─── UTILITIES ─── 
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function showError(element, message) {
+      element.textContent = message;
+      element.classList.remove('hidden');
+    }
+
+    function clearError(element) {
+      element.textContent = '';
+      element.classList.add('hidden');
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + type;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(400px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
